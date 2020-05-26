@@ -46,6 +46,13 @@ dependencies {
 
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
+    
+    implementation("com.squareup.okhttp3:okhttp:$okhttp_version") {
+        force = true
+    }
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     implementation "io.coil-kt:coil:0.10.1"
     implementation "io.coil-kt:coil-svg:0.10.1"
