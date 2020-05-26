@@ -3,10 +3,12 @@ package com.gauvain.seigneur.shinyalbums
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.viewModel.UserAlbumsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -25,6 +27,16 @@ class MainActivity : AppCompatActivity(), UserAlbumListAdapter.Listener {
         viewModel.albumList?.observe(this, Observer {
             Log.d("albumList", "changed $it")
             adapter.submitList(it)
+        })
+
+        viewModel.nextLoadingState?.observe(this, Observer {
+            Log.d("nextLoading", "lol $it")
+            when(it) {
+                LoadingState.IS_LOADING -> {
+                    footer.visibility = View.VISIBLE
+                }
+            }
+
         })
     }
 

@@ -62,7 +62,7 @@ class UserAlbumsDataSource(
                 val result = withContext(Dispatchers.IO) {
                     useCase.invoke(userName, params.key)
                 }
-                nextLoadingData.value = LoadingState.IS_LOADED
+                //nextLoadingData.value = LoadingState.IS_LOADED
                 when (result) {
                     is Outcome.Success -> {
                         isLastPage = result.data.next == null
