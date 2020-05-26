@@ -1,5 +1,8 @@
 package com.gauvain.seigneur.dataadapter.model
 
+import com.gauvain.seigneur.domain.model.AlbumModel
+import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
+import com.gauvain.seigneur.domain.utils.toDate
 import com.google.gson.annotations.SerializedName
 
 data class Album(
@@ -37,4 +40,24 @@ data class Album(
     val type: String,
     @SerializedName("artist")
     val artist: Artist
+)
+
+fun Album.toModel() = AlbumModel(
+    id = this.id,
+    title = this.title,
+    link = this.link,
+    cover = this.cover,
+    coverSmall = this.coverSmall,
+    coverMedium = this.coverMedium,
+    coverBig = this.coverBig,
+    coverXL = this.coverXL,
+    nbTracks = this.nbTracks,
+    releaseDate = this.releaseDate.toDate(SERVER_DATE_FORMAT),
+    recordType = this.recordType,
+    available = this.available,
+    trackList = this.trackList,
+    explicitLyrics = this.explicitLyrics,
+    timeAdd = this.timeAdd.toDate(),
+    type = this.type,
+    artist = this.artist.toModel()
 )

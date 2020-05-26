@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.dataadapter.model
 
+import com.gauvain.seigneur.domain.model.ArtistModel
 import com.google.gson.annotations.SerializedName
 
 data class Artist(
@@ -21,4 +22,16 @@ data class Artist(
     val trackList: String,
     @SerializedName("type")
     val type: String
+)
+
+fun Artist.toModel() = ArtistModel(
+    id = this.id,
+    name = this.name,
+    picture = this.picture,
+    pictureSmall = this.pictureSmall,
+    pictureMedium = this.pictureMedium,
+    pictureBig = this.pictureBig,
+    pictureXL = this.pictureXL,
+    trackList = this.trackList,
+    type = this.type
 )
