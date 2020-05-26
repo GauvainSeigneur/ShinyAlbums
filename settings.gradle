@@ -1,0 +1,5 @@
+rootProject.name='ShinyAlbums'
+include ':app'
+include ':presentation'
+include ':domain'
+include ':dataadapter'
