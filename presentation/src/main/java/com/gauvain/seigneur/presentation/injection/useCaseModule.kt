@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.presentation
+package com.gauvain.seigneur.presentation.injection
 
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
 import org.koin.dsl.module
