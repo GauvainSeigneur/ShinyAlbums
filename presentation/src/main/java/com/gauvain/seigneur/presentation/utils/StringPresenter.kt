@@ -10,7 +10,7 @@ open class StringPresenter(
     private vararg val formatArgs: Any
 ) {
 
-    internal fun getFormattedString(
+    fun getFormattedString(
         context: Context
     ): String =
         context.getString(key, *formatArgs)

@@ -2,7 +2,8 @@ package com.gauvain.seigneur.shinyalbums
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.gauvain.seigneur.domain.model.AlbumModel
+import com.gauvain.seigneur.presentation.model.NextRequestState
+import com.gauvain.seigneur.presentation.model.NextRequestStatus
 
 class FooterViewHolder(
     itemView: View
@@ -12,8 +13,15 @@ class FooterViewHolder(
         val layout = R.layout.item_footer
     }
 
-    fun bind(itemData: AlbumModel?, listener: UserAlbumListAdapter.Listener) {
+    fun bind(state: NextRequestState?) {
         with(itemView) {
+            state?.let {
+                when(it.nextRequestStatus) {
+                    NextRequestStatus.RUNNING -> {}
+                    NextRequestStatus.SUCCESS -> {}
+                    NextRequestStatus.FAILED -> {}
+                }
+            }
 
         }
     }

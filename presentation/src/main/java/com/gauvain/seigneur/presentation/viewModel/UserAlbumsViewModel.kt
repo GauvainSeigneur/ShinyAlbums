@@ -6,6 +6,7 @@ import androidx.paging.PagedList
 import com.gauvain.seigneur.domain.model.AlbumModel
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
 import com.gauvain.seigneur.presentation.model.ErrorData
+import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -29,10 +30,8 @@ class UserAlbumsViewModel(
         .build()
 
     var albumList: LiveData<PagedList<AlbumModel>>? = null
-    var initialLoadingState: LiveData<LoadingState>? = null
-    var nextLoadingState: LiveData<LoadingState>? = null
-    var initialErrorData: LiveData<ErrorData>? = null
-    var nextErrorData: LiveData<ErrorData>? = null
+    var initialLoadingState: LiveData<LiveDataState<LoadingState>>? = null
+    var nextLoadingState: LiveData<LiveDataState<LoadingState>>? = null
 
     fun fetchAlbums() {
         val dataSourceFactory = UserAlbumsDataSourceFactory(
@@ -43,10 +42,10 @@ class UserAlbumsViewModel(
 
         albumList = LivePagedListBuilder<Int, AlbumModel>(dataSourceFactory, config).build()
 
-        initialLoadingState = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData) { it.initialLoadingData }
-        nextLoadingState = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData) { it.nextLoadingData }
-        initialErrorData = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData) { it.initialErrorData }
-        nextErrorData = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData) { it.nextErrorData }
+        initialLoadingState = Transformations.switchMap(dataSourceFactory
+            .albumsDataSourceLiveData) { it.initialLoadingState }
+        nextLoadingState = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData)
+        { it.nextLoadingState }
     }
 
 }

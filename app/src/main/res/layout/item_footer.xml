@@ -2,15 +2,38 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
     android:id="@+id/itemFooterView"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
-    android:background="#4E1">
+    android:orientation="vertical">
 
     <ProgressBar
+        android:id="@+id/ProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/errorMessageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/retryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="retry" />
+
+    </LinearLayout>
 
 </FrameLayout>

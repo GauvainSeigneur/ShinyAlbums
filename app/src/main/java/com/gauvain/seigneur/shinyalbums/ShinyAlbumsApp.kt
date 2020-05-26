@@ -1,10 +1,6 @@
 package com.gauvain.seigneur.shinyalbums
 
 import android.app.Application
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.decode.SvgDecoder
-import coil.util.CoilUtils
 import com.gauvain.seigneur.dataadapter.injection.adapterModule
 import com.gauvain.seigneur.dataadapter.injection.remoteDataSourceModule
 import com.gauvain.seigneur.presentation.injection.useCaseModule
