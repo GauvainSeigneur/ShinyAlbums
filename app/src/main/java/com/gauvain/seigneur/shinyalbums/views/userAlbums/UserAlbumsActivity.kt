@@ -104,12 +104,12 @@ class UserAlbumsActivity : AppCompatActivity(),
             this, RecyclerView.VERTICAL,
             false
         )
-        userAlbumsRecyclerView.addItemDecoration(
+        /*serAlbumsRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 this,
                 LinearLayoutManager.VERTICAL
             )
-        )
+        )*/
         userAlbumsRecyclerView.adapter = adapter
     }
 

@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/userAlbumItemView"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/userAlbumItemView"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:ellipsize="end"
-        android:paddingBottom="56dp"/>
+        android:maxLines="1"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingStart="@dimen/space_m"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toTopOf="@+id/artistTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/coverCardView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Album title" />
+
+    <TextView
+        android:id="@+id/artistTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingStart="@dimen/space_m"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/coverCardView"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        tools:text="Artist Name" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/coverCardView"
+        android:layout_width="@dimen/album_item_cover_size"
+        android:layout_height="@dimen/album_item_cover_size"
+        android:layout_margin="@dimen/space_m"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/coverImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

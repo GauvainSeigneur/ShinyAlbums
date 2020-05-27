@@ -78,3 +78,9 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$androidx_test_rules"
     androidTestImplementation "androidx.test:runner:$androidx_test_runner"
 }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
