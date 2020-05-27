@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:duration="@integer/animation_duration">
+
+    <!-- Change bounds of all shared elements -->
+    <transitionSet>
+        <changeBounds />
+        <targets>
+            <target android:targetId="@id/detailsCoverCardView" />
+            <target android:excludeId="@id/detailsCoverImageView" />
+            <target android:targetId="@+id/activityDetailsBackground" />
+        </targets>
+    </transitionSet>
+
+
+    <!-- Start fading background of activity -->
+    <transition
+        class="com.gauvain.seigneur.shinyalbums.animation.FadeTransition"
+        app:endAlpha="1.0"
+        app:startAlpha="0.5">
+        <targets>
+            <target android:targetId="@+id/activityDetailsBackground" />
+        </targets>
+    </transition>
+
+
+</transitionSet>

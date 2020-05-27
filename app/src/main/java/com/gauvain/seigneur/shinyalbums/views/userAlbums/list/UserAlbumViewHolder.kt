@@ -26,7 +26,7 @@ class UserAlbumViewHolder(
             titleTextView.text = itemData?.title?: "oops"
             artistTextView.text =  itemData?.artistName
             userAlbumItemView.setOnClickListener {
-                listener.onClick(itemData?.id)
+                listener.onClick(itemData?.id, itemBackground, coverCardView, coverImageView)
             }
         }
     }

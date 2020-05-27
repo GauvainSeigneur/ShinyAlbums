@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/ShinyAlbumsTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.splash.SplashActivity"></activity>
-        <activity android:name=".views.albumDetails.AlbumDetailsActivity" />
-        <activity android:name=".views.userAlbums.UserAlbumsActivity">
+        <activity android:name=".views.splash.SplashActivity"
+            android:theme="@style/ShinyAlbumsTheme.SlpashActivityTheme"/>
+        <activity android:name=".views.albumDetails.AlbumDetailsActivity"
+            android:theme="@style/ShinyAlbumsTheme.Transparent.AlbumDetails"/>
+        <activity android:name=".views.userAlbums.UserAlbumsActivity"
+            android:theme="@style/ShinyAlbumsTheme.UserAlbums">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

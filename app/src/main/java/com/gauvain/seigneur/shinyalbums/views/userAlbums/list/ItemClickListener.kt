@@ -1,6 +1,10 @@
 package com.gauvain.seigneur.shinyalbums.views.userAlbums.list
 
-interface ItemClickListener {
+import android.view.View
 
-    fun onClick(id: Long?)
+interface ItemClickListener {
+    fun onClick(id: Long?,
+                rootView: View,
+                cardView: View,
+                imageView: View)
 }

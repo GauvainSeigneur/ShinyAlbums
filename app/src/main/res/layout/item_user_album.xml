@@ -9,6 +9,21 @@
     android:focusable="true"
     android:orientation="vertical">
 
+    <!-- Use a separate view for the background, rather than on the root view because it is a
+    shared element. Otherwise it interferes with the window enter transition i.e. as it is
+    resized for the shared element transition, many views are considered 'off-screen' so
+    visibility transitions are not run. -->
+    <View
+        android:id="@+id/itemBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="@string/transition_root"/>
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
@@ -41,12 +56,14 @@
         android:layout_width="@dimen/album_item_cover_size"
         android:layout_height="@dimen/album_item_cover_size"
         android:layout_margin="@dimen/space_m"
+        android:transitionName="@string/transition_country_flag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/coverImageView"
+            android:transitionName="@string/transition_cover_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

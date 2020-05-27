@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.albumDetails.AlbumDetailsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Use a separate view for the background, rather than on the root view because it is a
+    shared element. Otherwise it interferes with the window enter transition i.e. as it is
+    resized for the shared element transition, many views are considered 'off-screen' so
+    visibility transitions are not run. -->
+    <View
+        android:id="@+id/activityDetailsBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shared_details_background"
+        android:importantForAccessibility="no"
+        android:transitionName="@string/transition_root" />
+
+    <!--
+        As we can't use windowSharedElementsUseOverlay=true for activity theme because of the
+        shared transition of the background and the fact that the image inside collapsing toolbar
+        will not be shown until the border of the appbar (because of
+        windowSharedElementsUseOverlay set to false) here's a workaround. This is imageView is in the
+        root layout, so the sharedTransition will work even with windowSharedElementsUseOverlay set
+        to false. We use this to perform the animation and make it disappear when the shared
+        transition is finished. -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detailsCoverCardView"
+        android:layout_width="@dimen/detail_album_item_cover_size"
+        android:layout_height="@dimen/detail_album_item_cover_size"
+        android:layout_gravity="center_horizontal"
+        android:transitionName="@string/transition_country_flag"
+        android:layout_margin="@dimen/space_m">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detailsCoverImageView"
+            android:transitionName="@string/transition_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/vd_binocular"/>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -20,9 +20,12 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- we have to  set a background to tis view in order to perform PopTransition and
+    FadeTransition -->
     <androidx.recyclerview.widget.RecyclerView
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:id="@+id/userAlbumsRecyclerView"
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
