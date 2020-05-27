@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.shinyalbums.list
+package com.gauvain.seigneur.shinyalbums.views.userAlbums.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
