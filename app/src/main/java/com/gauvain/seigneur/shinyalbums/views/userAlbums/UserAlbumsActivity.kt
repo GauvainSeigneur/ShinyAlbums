@@ -1,5 +1,7 @@
-package com.gauvain.seigneur.shinyalbums
+package com.gauvain.seigneur.shinyalbums.views.userAlbums
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,21 +13,26 @@ import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.model.NextRequestState
 import com.gauvain.seigneur.presentation.viewModel.UserAlbumsViewModel
-import com.gauvain.seigneur.shinyalbums.list.ItemClickListener
-import com.gauvain.seigneur.shinyalbums.list.RetryListener
-import com.gauvain.seigneur.shinyalbums.list.UserAlbumListAdapter
-import kotlinx.android.synthetic.main.activity_main.*
+import com.gauvain.seigneur.shinyalbums.R
+import com.gauvain.seigneur.shinyalbums.views.userAlbums.list.ItemClickListener
+import com.gauvain.seigneur.shinyalbums.views.userAlbums.list.RetryListener
+import com.gauvain.seigneur.shinyalbums.views.userAlbums.list.UserAlbumListAdapter
+import kotlinx.android.synthetic.main.activity_user_albums.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(),
+class UserAlbumsActivity : AppCompatActivity(),
     ItemClickListener, RetryListener {
+
+    companion object {
+        fun newIntent(context: Context): Intent = Intent(context, UserAlbumsActivity::class.java)
+    }
 
     private val viewModel : UserAlbumsViewModel by viewModel()
     private lateinit var adapter: UserAlbumListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_user_albums)
         initAdapter()
         observeViewModel()
     }
