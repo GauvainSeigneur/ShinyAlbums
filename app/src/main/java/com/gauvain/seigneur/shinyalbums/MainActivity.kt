@@ -2,6 +2,7 @@ package com.gauvain.seigneur.shinyalbums
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity(),
                     when(it.data) {
                         LoadingState.IS_LOADED -> {
                             initialLoadingView.setLoaded()
+                            initialLoadingView.visibility = View.GONE
                         }
                         LoadingState.IS_LOADING -> {
                             initialLoadingView.setLoading()

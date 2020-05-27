@@ -17,7 +17,7 @@ class GetUserAlbumsAdapter(private val service: DeezerService) :
         val result = runCatching {
             service.getUserAlbums(userId, page).execute()
         }.onFailure {
-            throw GetUserAlbumsException(RequestExceptionType.UNKNOWN_HOST, it.message)
+            throw GetUserAlbumsException(RequestExceptionType.UNKNOWN_ERROR, it.message)
         }
         return handleResult(result)
     }
@@ -26,9 +26,11 @@ class GetUserAlbumsAdapter(private val service: DeezerService) :
         return result.run {
             getOrNull()?.body().let { response ->
                 if (response?.errorResponse != null) {
-                    throw GetUserAlbumsException(RequestExceptionType.UNAUTHORIZED, response.errorResponse.message)
+                    throw GetUserAlbumsException(RequestExceptionType.FORMATTED_ERROR, response.errorResponse.message)
                 } else {
-                    response?.toModel()
+                    response?.data?.let {
+                        response.toModel()
+                    }
                 } ?: throw GetUserAlbumsException(RequestExceptionType.BODY_NULL, "Body null")
             }
         }

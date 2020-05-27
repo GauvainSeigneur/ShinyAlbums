@@ -16,6 +16,7 @@ data class Albums(
     val next: String? = null,
     @SerializedName("prev")
     val prev: String? = null,
+    @SerializedName("error")
     override val errorResponse: ErrorResponse? = null
 ) : BaseResponse()
 
