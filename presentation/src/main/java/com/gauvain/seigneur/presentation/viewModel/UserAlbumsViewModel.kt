@@ -5,9 +5,10 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.gauvain.seigneur.domain.model.AlbumModel
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
-import com.gauvain.seigneur.presentation.model.ErrorData
+import com.gauvain.seigneur.presentation.model.AlbumItemData
 import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
+import com.gauvain.seigneur.presentation.model.toItemData
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -29,23 +30,35 @@ class UserAlbumsViewModel(
         .setEnablePlaceholders(false)
         .build()
 
-    var albumList: LiveData<PagedList<AlbumModel>>? = null
+    var albumList: LiveData<PagedList<AlbumItemData>>? = null
     var initialLoadingState: LiveData<LiveDataState<LoadingState>>? = null
     var nextLoadingState: LiveData<LiveDataState<LoadingState>>? = null
+    var dataSourceFactory: UserAlbumsDataSourceFactory? = null
 
     fun fetchAlbums() {
-        val dataSourceFactory = UserAlbumsDataSourceFactory(
+        dataSourceFactory = UserAlbumsDataSourceFactory(
             "2529",
             viewModelScope,
             useCase
         )
 
-        albumList = LivePagedListBuilder<Int, AlbumModel>(dataSourceFactory, config).build()
 
-        initialLoadingState = Transformations.switchMap(dataSourceFactory
-            .albumsDataSourceLiveData) { it.initialLoadingState }
-        nextLoadingState = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData)
-        { it.nextLoadingState }
+
+        dataSourceFactory?.let {
+            albumList = LivePagedListBuilder<Int, AlbumItemData>(it.map { albumModel ->
+                //populate list of albumModel if you have to
+                albumModel.toItemData()
+            }, config).build()
+            initialLoadingState = Transformations.switchMap(it.albumsDataSourceLiveData) { it
+                .initialLoadingState }
+            nextLoadingState = Transformations.switchMap(it.albumsDataSourceLiveData) { it
+                .nextLoadingState }
+        }
+
+    }
+
+    fun retry() {
+        dataSourceFactory?.albumsDataSourceLiveData?.value?.retryAllFailed()
     }
 
 }

@@ -11,10 +11,8 @@ import com.gauvain.seigneur.presentation.model.ErrorDataType
 import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.utils.StringPresenter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import java.util.concurrent.Executor
 
 class UserAlbumsDataSource(
     private val userName: String,
@@ -22,9 +20,18 @@ class UserAlbumsDataSource(
     private val useCase: GetUserAlbumsUseCase
 ) : PageKeyedDataSource<Int, AlbumModel>() {
 
+    // keep a function reference for the retry event
+    private var retry: (() -> Any)? = null
+
     private var isLastPage = false
     val initialLoadingState = MutableLiveData<LiveDataState<LoadingState>>()
     val nextLoadingState = MutableLiveData<LiveDataState<LoadingState>>()
+
+    fun retryAllFailed() {
+        val prevRetry = retry
+        retry = null
+        prevRetry?.invoke()
+    }
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -42,6 +49,9 @@ class UserAlbumsDataSource(
                     callback.onResult(result.data.albums, null, result.data.next)
                 }
                 is Outcome.Error -> {
+                    retry = {
+                        loadInitial(params, callback)
+                    }
                     initialLoadingState.value = LiveDataState.Error(
                         ErrorData(
                             ErrorDataType.RECOVERABLE,
@@ -69,6 +79,9 @@ class UserAlbumsDataSource(
                         callback.onResult(result.data.albums, result.data.next)
                     }
                     is Outcome.Error -> {
+                        retry = {
+                            loadAfter(params, callback)
+                        }
                         nextLoadingState.value = LiveDataState.Error(
                             ErrorData(
                                 ErrorDataType.RECOVERABLE,
@@ -84,5 +97,10 @@ class UserAlbumsDataSource(
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, AlbumModel>) {
+    }
+
+    override fun invalidate() {
+        super.invalidate()
+        scope.cancel()
     }
 }

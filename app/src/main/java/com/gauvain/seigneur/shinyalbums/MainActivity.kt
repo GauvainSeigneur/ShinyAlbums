@@ -10,10 +10,14 @@ import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.model.NextRequestState
 import com.gauvain.seigneur.presentation.viewModel.UserAlbumsViewModel
+import com.gauvain.seigneur.shinyalbums.list.ItemClickListener
+import com.gauvain.seigneur.shinyalbums.list.RetryListener
+import com.gauvain.seigneur.shinyalbums.list.UserAlbumListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), UserAlbumListAdapter.Listener {
+class MainActivity : AppCompatActivity(),
+    ItemClickListener, RetryListener {
 
     private val viewModel : UserAlbumsViewModel by viewModel()
     private lateinit var adapter: UserAlbumListAdapter
@@ -49,12 +53,19 @@ class MainActivity : AppCompatActivity(), UserAlbumListAdapter.Listener {
 
     }
 
-    override fun onClick(id: String) {
+    override fun onClick(id: Long?) {
 
     }
 
+    override fun onRetry() {
+        viewModel.retry()
+    }
+
     private fun initAdapter() {
-        adapter = UserAlbumListAdapter(this)
+        adapter = UserAlbumListAdapter(
+            this,
+            this
+        )
 
         userAlbumsRecyclerView.layoutManager = LinearLayoutManager(
             this, RecyclerView.VERTICAL,

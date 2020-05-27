@@ -1,12 +1,15 @@
-package com.gauvain.seigneur.shinyalbums
+package com.gauvain.seigneur.shinyalbums.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.gauvain.seigneur.presentation.model.NextRequestState
 import com.gauvain.seigneur.presentation.model.NextRequestStatus
+import com.gauvain.seigneur.shinyalbums.R
+import kotlinx.android.synthetic.main.item_footer.view.*
 
 class FooterViewHolder(
-    itemView: View
+    itemView: View,
+    private val retryListener: RetryListener
 ) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
@@ -21,6 +24,9 @@ class FooterViewHolder(
                     NextRequestStatus.SUCCESS -> {}
                     NextRequestStatus.FAILED -> {}
                 }
+            }
+            retryButton.setOnClickListener {
+                retryListener.onRetry()
             }
 
         }

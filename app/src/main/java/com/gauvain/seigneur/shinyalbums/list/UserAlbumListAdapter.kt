@@ -1,23 +1,18 @@
-package com.gauvain.seigneur.shinyalbums
+package com.gauvain.seigneur.shinyalbums.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.gauvain.seigneur.domain.model.AlbumModel
+import com.gauvain.seigneur.presentation.model.AlbumItemData
 import com.gauvain.seigneur.presentation.model.NextRequestState
 
 class UserAlbumListAdapter(
-    private val listener: Listener
-) : PagedListAdapter<AlbumModel, RecyclerView.ViewHolder>
+    private val listener: ItemClickListener,
+    private val retryListener: RetryListener
+) : PagedListAdapter<AlbumItemData, RecyclerView.ViewHolder>
     (DiffCallback) {
-
-    interface Listener {
-        fun onClick(
-            id: String
-        )
-    }
 
     private var nextRequestState: NextRequestState? = null
 
@@ -25,34 +20,20 @@ class UserAlbumListAdapter(
         private const val ITEM = 0
         private const val LOADING = 1
 
-        val DiffCallback = object : DiffUtil.ItemCallback<AlbumModel>() {
-            override fun areItemsTheSame(oldItem: AlbumModel, newItem: AlbumModel): Boolean {
+        val DiffCallback = object : DiffUtil.ItemCallback<AlbumItemData>() {
+            override fun areItemsTheSame(oldItem: AlbumItemData, newItem: AlbumItemData): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: AlbumModel, newItem: AlbumModel): Boolean {
+            override fun areContentsTheSame(oldItem: AlbumItemData, newItem: AlbumItemData): Boolean {
                 return oldItem.title == newItem.title
             }
         }
     }
 
-    /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAlbumViewHolder =
-        UserAlbumViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                UserAlbumViewHolder.layout,
-                parent,
-                false
-            )
-        )
-
-    override fun onBindViewHolder(holder: UserAlbumViewHolder, position: Int) {
-        holder.bind(getItem(position), listener)
-    }*/
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
-            ITEM -> return  UserAlbumViewHolder(
+            ITEM -> return UserAlbumViewHolder(
                 LayoutInflater.from(parent.context).inflate(
                     UserAlbumViewHolder.layout,
                     parent,
@@ -64,7 +45,8 @@ class UserAlbumListAdapter(
                     FooterViewHolder.layout,
                     parent,
                     false
-                )
+                ),
+                retryListener
             )
             else -> throw IllegalArgumentException("unknown view type")
         }

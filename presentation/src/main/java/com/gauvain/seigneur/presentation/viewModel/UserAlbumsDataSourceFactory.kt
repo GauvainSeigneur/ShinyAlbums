@@ -5,6 +5,7 @@ import androidx.paging.DataSource
 import com.gauvain.seigneur.domain.model.AlbumModel
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
 import kotlinx.coroutines.CoroutineScope
+import java.util.concurrent.Executor
 
 class UserAlbumsDataSourceFactory(
     val userName:String,
