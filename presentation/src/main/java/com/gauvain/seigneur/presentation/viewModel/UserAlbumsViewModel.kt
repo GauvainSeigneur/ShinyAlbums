@@ -3,7 +3,6 @@ package com.gauvain.seigneur.presentation.viewModel
 import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.gauvain.seigneur.domain.model.AlbumModel
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
 import com.gauvain.seigneur.presentation.model.AlbumItemData
 import com.gauvain.seigneur.presentation.model.LiveDataState
@@ -30,35 +29,33 @@ class UserAlbumsViewModel(
         .setEnablePlaceholders(false)
         .build()
 
-    var albumList: LiveData<PagedList<AlbumItemData>>? = null
+
     var initialLoadingState: LiveData<LiveDataState<LoadingState>>? = null
     var nextLoadingState: LiveData<LiveDataState<LoadingState>>? = null
-    var dataSourceFactory: UserAlbumsDataSourceFactory? = null
-
-    fun fetchAlbums() {
-        dataSourceFactory = UserAlbumsDataSourceFactory(
+    val dataSourceFactory: UserAlbumsDataSourceFactory by lazy {
+        UserAlbumsDataSourceFactory(
             "2529",
             viewModelScope,
             useCase
         )
-
-
-
-        dataSourceFactory?.let {
-            albumList = LivePagedListBuilder<Int, AlbumItemData>(it.map { albumModel ->
-                //populate list of albumModel if you have to
-                albumModel.toItemData()
-            }, config).build()
-            initialLoadingState = Transformations.switchMap(it.albumsDataSourceLiveData) { it
-                .initialLoadingState }
-            nextLoadingState = Transformations.switchMap(it.albumsDataSourceLiveData) { it
-                .nextLoadingState }
-        }
-
     }
 
+    val albumList: LiveData<PagedList<AlbumItemData>> by lazy {
+        initialLoadingState = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData) { it
+            .initialLoadingState }
+        nextLoadingState = Transformations.switchMap(dataSourceFactory.albumsDataSourceLiveData) { it
+            .nextLoadingState }
+
+        LivePagedListBuilder<Int, AlbumItemData>(dataSourceFactory.map { albumModel ->
+            //populate list of albumModel if you have to
+            albumModel.toItemData()
+        }, config).build()
+    }
+
+
+
     fun retry() {
-        dataSourceFactory?.albumsDataSourceLiveData?.value?.retryAllFailed()
+        dataSourceFactory.albumsDataSourceLiveData.value?.retryAllFailed()
     }
 
 }

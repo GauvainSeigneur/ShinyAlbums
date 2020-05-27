@@ -26,10 +26,42 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initAdapter()
-        viewModel.fetchAlbums()
+        observeViewModel()
+    }
 
-        viewModel.albumList?.observe(this, Observer {
+    override fun onClick(id: Long?) {
+
+    }
+
+    override fun onRetry() {
+        viewModel.retry()
+    }
+
+    private fun observeViewModel() {
+        viewModel.albumList.observe(this, Observer {
             adapter.submitList(it)
+        })
+
+        viewModel.initialLoadingState?.observe(this, Observer {
+            when(it) {
+                is LiveDataState.Success -> {
+                    when(it.data) {
+                        LoadingState.IS_LOADED -> {
+                            initialLoadingView.setLoaded()
+                        }
+                        LoadingState.IS_LOADING -> {
+                            initialLoadingView.setLoading()
+                        }
+                    }
+                }
+                is LiveDataState.Error -> {
+                    initialLoadingView.setError(
+                        it.errorData.title?.getFormattedString(this),
+                        it.errorData.description?.getFormattedString(this),
+                        it.errorData.buttonText?.getFormattedString(this)
+                    ) { viewModel.retry() }
+                }
+            }
         })
 
         viewModel.nextLoadingState?.observe(this, Observer {
@@ -51,14 +83,6 @@ class MainActivity : AppCompatActivity(),
 
         })
 
-    }
-
-    override fun onClick(id: Long?) {
-
-    }
-
-    override fun onRetry() {
-        viewModel.retry()
     }
 
     private fun initAdapter() {
