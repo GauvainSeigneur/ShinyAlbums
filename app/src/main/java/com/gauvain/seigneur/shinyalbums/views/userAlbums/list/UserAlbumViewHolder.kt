@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.shinyalbums.views.userAlbums.list
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
@@ -22,6 +23,7 @@ class UserAlbumViewHolder(
             titleTextView.text = itemData?.title?: "oops"
             artistTextView.text =  itemData?.artistName
             userAlbumItemView.setOnClickListener {
+                Log.d("itemCmlick", "id ${itemData?.albumTrackId}")
                 listener.onClick(itemData?.id, itemBackground, coverCardView, coverImageView)
             }
         }

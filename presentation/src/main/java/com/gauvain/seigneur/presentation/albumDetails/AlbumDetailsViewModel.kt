@@ -39,7 +39,7 @@ class AlbumDetailsViewModel(
     }
 
     fun getAlbumTracks() {
-        detailsData?.id?.let {
+        detailsData?.albumTrackListId?.let {
             viewModelScope.launch(Dispatchers.Main) {
                 val result = withContext(Dispatchers.IO) {
                     useCase.invoke(it)

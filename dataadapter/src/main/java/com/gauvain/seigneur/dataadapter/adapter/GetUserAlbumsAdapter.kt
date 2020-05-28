@@ -18,6 +18,8 @@ class GetUserAlbumsAdapter(private val service: DeezerService) :
         val result = runCatching {
             service.getUserAlbums(userId, page).execute()
         }.onFailure {
+
+            Log.d("getUserAlbums", "wesh ${it}")
             throw GetUserAlbumsException(RequestExceptionType.UNKNOWN_ERROR, it.message)
         }
         return handleResult(result)
@@ -27,6 +29,7 @@ class GetUserAlbumsAdapter(private val service: DeezerService) :
         return result.run {
             getOrNull()?.body().let { response ->
                 if (response?.errorResponse != null) {
+                    Log.d("getUserAlbums", "oops ${response.data}")
                     throw GetUserAlbumsException(RequestExceptionType.FORMATTED_ERROR, response.errorResponse.message)
                 } else {
                     response?.data?.let {

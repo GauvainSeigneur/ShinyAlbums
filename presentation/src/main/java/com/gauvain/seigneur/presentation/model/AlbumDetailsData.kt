@@ -25,6 +25,7 @@ data class TransitionAlbumItemData(
 @Parcelize
 data class AlbumDetailsData(
    val id: Long,
+   val albumTrackListId:Long,
    val cover: String,
    val title: String,
    val artistName: String,
@@ -40,6 +41,7 @@ fun AlbumDetailsData.toSummary() = AlbumDetailsSummary(
 
 fun AlbumModel.toAlbumDetailData() : AlbumDetailsData = AlbumDetailsData(
    id = this.id,
+   albumTrackListId = this.trackListId,
    title = this.title,
    artistName = this.artist.name,
    cover = this.coverBig,
