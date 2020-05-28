@@ -1,60 +1,7 @@
 <animated-vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt">
-    <aapt:attr name="android:drawable">
-        <vector
-            android:name="vector"
-            android:width="24dp"
-            android:height="24dp"
-            android:viewportWidth="24"
-            android:viewportHeight="24">
-            <path
-                android:name="equalizer_0"
-                android:pathData="M 4 10 L 4 14"
-                android:strokeColor="#1d1d1b"
-                android:strokeWidth="2"
-                android:trimPathStart="0.5"
-                android:trimPathEnd="0.5"
-                android:strokeLineCap="round"
-                android:strokeMiterLimit="10"/>
-            <path
-                android:name="equalizer_1"
-                android:pathData="M 8 6 L 8 18"
-                android:strokeColor="#1d1d1b"
-                android:strokeWidth="2"
-                android:trimPathStart="0.5"
-                android:trimPathEnd="0.5"
-                android:strokeLineCap="round"
-                android:strokeMiterLimit="10"/>
-            <path
-                android:name="equalizer_2"
-                android:pathData="M 12 2 L 12 22"
-                android:strokeColor="#1d1d1b"
-                android:strokeWidth="2"
-                android:trimPathStart="0.5"
-                android:trimPathEnd="0.5"
-                android:strokeLineCap="round"
-                android:strokeMiterLimit="10"/>
-            <path
-                android:name="equalizer_3"
-                android:pathData="M 16 6 L 16 18"
-                android:strokeColor="#1d1d1b"
-                android:strokeWidth="2"
-                android:trimPathStart="0.5"
-                android:trimPathEnd="0.5"
-                android:strokeLineCap="round"
-                android:strokeMiterLimit="10"/>
-            <path
-                android:name="equalizer_4"
-                android:pathData="M 20 10 L 20 14"
-                android:strokeColor="#1d1d1b"
-                android:strokeWidth="2"
-                android:trimPathStart="0.5"
-                android:trimPathEnd="0.5"
-                android:strokeLineCap="round"
-                android:strokeMiterLimit="10"/>
-        </vector>
-    </aapt:attr>
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:drawable="@drawable/vd_equalizer_loader">
     <target android:name="equalizer_1">
         <aapt:attr name="android:animation">
             <set>

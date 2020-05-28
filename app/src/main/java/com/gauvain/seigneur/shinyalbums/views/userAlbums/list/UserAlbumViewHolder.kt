@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.gauvain.seigneur.presentation.model.AlbumItemData
 import com.gauvain.seigneur.shinyalbums.R
+import com.gauvain.seigneur.shinyalbums.utils.loadCover
 import kotlinx.android.synthetic.main.item_user_album.view.*
 
 class UserAlbumViewHolder(
@@ -17,12 +18,7 @@ class UserAlbumViewHolder(
 
     fun bind(itemData: AlbumItemData?, listener: ItemClickListener) {
         with(itemView) {
-            coverImageView.load(itemData?.cover) {
-                placeholder(R.drawable.vd_binocular)
-                error(R.drawable.vd_binocular)
-                fallback(R.drawable.vd_binocular)
-
-            }
+            coverImageView.loadCover(itemData?.cover)
             titleTextView.text = itemData?.title?: "oops"
             artistTextView.text =  itemData?.artistName
             userAlbumItemView.setOnClickListener {

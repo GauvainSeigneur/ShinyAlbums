@@ -9,6 +9,6 @@
     <dimen name="space_xxl">48dp</dimen>
 
     <dimen name="album_item_cover_size">72dp</dimen>
-    <dimen name="detail_album_item_cover_size">250dp</dimen>
+    <dimen name="detail_album_item_cover_size">192dp</dimen>
 
 </resources>

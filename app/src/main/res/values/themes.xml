@@ -11,8 +11,9 @@
         <item name="colorError">@color/colorError</item>
         <item name="android:colorError" tools:targetApi="26">@color/colorError</item>
         <!--<item name="android:textColor"></item> -->
-        <!--<item name="android:statusBarColor" tools:targetApi="21">@color/colorBackground</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/colorBackground</item> -->
+        <item name="android:statusBarColor" tools:targetApi="21">@color/colorBackground</item>
+        <!--<item name="android:navigationBarColor" tools:targetApi="21">@color
+        /colorBackground</item> -->
         <item name="android:colorEdgeEffect" tools:targetApi="21">@color/colorEdge</item>
 
         <!-- New MaterialComponents attributes. -->

@@ -1,9 +1,6 @@
 package com.gauvain.seigneur.presentation.mock
 
-import com.gauvain.seigneur.domain.model.AlbumModel
-import com.gauvain.seigneur.domain.model.AlbumPaginedModel
-import com.gauvain.seigneur.domain.model.ArtistModel
-import com.gauvain.seigneur.domain.model.Outcome
+import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.toDate
 
@@ -42,8 +39,10 @@ object UseCaseModelMock {
                     )
                 )
             ),
-            next = 25,
+            next = null,
             prev = null
         )
     )
+
+    fun createOutComeError()  = Outcome.Error(ErrorType.ERROR_UNKNOWN)
 }

@@ -1,11 +1,11 @@
-package com.gauvain.seigneur.presentation.viewModel
+package com.gauvain.seigneur.presentation.userAlbums
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.gauvain.seigneur.domain.model.AlbumModel
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
+import com.gauvain.seigneur.presentation.userAlbums.UserAlbumsDataSource
 import kotlinx.coroutines.CoroutineScope
-import java.util.concurrent.Executor
 
 class UserAlbumsDataSourceFactory(
     val userName:String,

@@ -6,16 +6,16 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.core.util.Pair
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gauvain.seigneur.presentation.model.AlbumDetailsData
 import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.model.NextRequestState
-import com.gauvain.seigneur.presentation.viewModel.UserAlbumsViewModel
+import com.gauvain.seigneur.presentation.userAlbums.UserAlbumsViewModel
+import com.gauvain.seigneur.presentation.utils.event.EventObserver
 import com.gauvain.seigneur.shinyalbums.R
 import com.gauvain.seigneur.shinyalbums.animation.makeSceneTransitionAnimation
 import com.gauvain.seigneur.shinyalbums.views.albumDetails.AlbumDetailsActivity
@@ -43,10 +43,15 @@ class UserAlbumsActivity : AppCompatActivity(),
     }
 
     override fun onClick(id: Long?, rootView: View, cardView: View, imageView: View) {
-        displayDetails(id, rootView, cardView, imageView)
+        viewModel.getAlbumDetail(id, rootView, cardView, imageView)
     }
 
-    private fun displayDetails(id: Long?, rootView: View, cardView: View, imageView: View) {
+    private fun displayDetails(
+        details: AlbumDetailsData,
+        rootView: View,
+        cardView: View,
+        imageView: View
+    ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val options = makeSceneTransitionAnimation(
                 this@UserAlbumsActivity,
@@ -55,14 +60,16 @@ class UserAlbumsActivity : AppCompatActivity(),
                 Pair(imageView, getString(R.string.transition_cover_image))
             )
             startActivity(
-                AlbumDetailsActivity.newIntent(this@UserAlbumsActivity),
+                AlbumDetailsActivity.newIntent(this@UserAlbumsActivity, details),
                 options.toBundle()
             )
         } else {
             startActivity(
-                AlbumDetailsActivity.newIntent(this@UserAlbumsActivity))
+                AlbumDetailsActivity.newIntent(this@UserAlbumsActivity, details)
+            )
         }
     }
+
     override fun onRetry() {
         viewModel.retry()
     }
@@ -114,6 +121,19 @@ class UserAlbumsActivity : AppCompatActivity(),
                                 this
                             )
                         )
+                    )
+                }
+            }
+        })
+
+        viewModel.displaysDetailsEvent.observe(this, EventObserver { result ->
+            when (result) {
+                is LiveDataState.Success -> {
+                    displayDetails(
+                        result.data.details,
+                        result.data.rootView,
+                        result.data.cardView,
+                        result.data.imageView
                     )
                 }
             }

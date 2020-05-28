@@ -4,4 +4,7 @@
     <string name="error_fetch_data_title">Oops&#8230; Data not found</string>
     <string name="error_fetch_data_description">Please check your internet connection and retry.</string>
     <string name="retry">retry</string>
+
+    <string name="total_tracks">%d titles</string>
+    <string name="album_artist_year">%1$s - %2$s</string>
 </resources>

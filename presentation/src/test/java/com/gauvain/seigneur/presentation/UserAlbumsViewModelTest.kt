@@ -1,26 +1,22 @@
 package com.gauvain.seigneur.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
-import com.gauvain.seigneur.presentation.mock.LiveDataModelMock
-import com.gauvain.seigneur.presentation.mock.UseCaseModelMock
-import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.utils.MainCoroutineRule
 import com.gauvain.seigneur.presentation.utils.getOrAwaitValue
-import com.gauvain.seigneur.presentation.viewModel.UserAlbumsViewModel
-import com.nhaarman.mockitokotlin2.given
-import junit.framework.Assert.assertEquals
+import com.gauvain.seigneur.presentation.userAlbums.UserAlbumsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.mockito.*
 
 @ExperimentalCoroutinesApi
@@ -51,32 +47,49 @@ class UserAlbumsViewModelTest {
         mainThreadSurrogate.close()
     }
 
-    @Test
-    fun
-        given_usecase_return_paginedAlbumModel_when_fetch_albums_then_liveData_must_return_data() {
-        runBlockingTest {
-            given(useCase.invoke("userid", 0)).willReturn(
-                UseCaseModelMock.createSuccessPaginedAlbumUseCaseOutCome()
-            )
-            val value = viewModel.albumList.getOrAwaitValue()
-            //mainCoroutineRule.advanceUntilIdle()
-            assertEquals(
-                value,
-                //mockPagedList(LiveDataModelMock.createAlbumsPaginedLiveData())
-                LiveDataModelMock.createAlbumsPaginedLiveData()
-
-            )
-        }
+    fun test() {
+        //todo - mockDataSource and mock useCase calback
     }
 
-    fun <T> mockPagedList(list: List<T>): PagedList<T> {
-        val pagedList = Mockito.mock(PagedList::class.java) as PagedList<T>
-        Mockito.`when`(pagedList.get(ArgumentMatchers.anyInt())).then { invocation ->
-            val index = invocation.arguments.first() as Int
-            list[index]
-        }
-        Mockito.`when`(pagedList.size).thenReturn(list.size)
-        return pagedList
+
+    fun <T> List<T>.asPagedList(page: Int, config: PagedList.Config? = null): PagedList<T>? {
+        val defaultConfig = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPageSize(25)
+            .setPrefetchDistance(25)
+            .build()
+        return LivePagedListBuilder<Int, T>(
+            createMockDataSourceFactory(this, page),
+            config ?: defaultConfig
+        ).build().getOrAwaitValue()
     }
 
+
+    private fun <T> createMockDataSourceFactory(itemList: List<T>, page:Int): DataSource
+    .Factory<Int, T> =
+        object : DataSource.Factory<Int, T>() {
+            override fun create(): DataSource<Int, T> = MockPageKeyedDataSource(page, itemList)
+        }
+
+    class MockPageKeyedDataSource<Int, T>(private val page: Int,
+                                      private val itemList: List<T>) :
+        PageKeyedDataSource<Int, T>() {
+
+        override fun isInvalid(): Boolean = false
+
+        override fun loadInitial(
+            params: LoadInitialParams<Int>,
+            callback: LoadInitialCallback<Int, T>
+        ) {
+            callback.onResult(itemList, null, page)
+        }
+
+        override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, T>) {
+            callback.onResult(itemList, page)
+        }
+
+        override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, T>) {
+
+        }
+    }
 }

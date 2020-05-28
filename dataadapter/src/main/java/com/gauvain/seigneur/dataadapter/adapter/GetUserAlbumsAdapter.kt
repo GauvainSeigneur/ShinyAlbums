@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.dataadapter.adapter
 
+import android.util.Log
 import com.gauvain.seigneur.dataadapter.model.Albums
 import com.gauvain.seigneur.dataadapter.model.toModel
 import com.gauvain.seigneur.dataadapter.service.DeezerService
@@ -29,6 +30,7 @@ class GetUserAlbumsAdapter(private val service: DeezerService) :
                     throw GetUserAlbumsException(RequestExceptionType.FORMATTED_ERROR, response.errorResponse.message)
                 } else {
                     response?.data?.let {
+                        Log.d("getUserAlbums", "respon ${response.data}")
                         response.toModel()
                     }
                 } ?: throw GetUserAlbumsException(RequestExceptionType.BODY_NULL, "Body null")

@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.presentation.viewModel
+package com.gauvain.seigneur.presentation.userAlbums
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
