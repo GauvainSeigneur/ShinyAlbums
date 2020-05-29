@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.shinyalbums.utils
 
-
 import android.graphics.Color
 import androidx.core.graphics.ColorUtils
 
@@ -10,7 +9,6 @@ object MyColorUtils {
     fun isDark(color: Int): Boolean {
         return ColorUtils.calculateLuminance(color) < 0.75
     }
-
 
     /**
      * Lightens a color by a given factor.

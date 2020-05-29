@@ -11,8 +11,8 @@ data class TrackResponse(
     @SerializedName("total")
     val total: Int,
     @SerializedName("error")
-    override val errorResponse: ErrorResponse?=null
-):BaseResponse()
+    override val errorResponse: ErrorResponse? = null
+) : BaseResponse()
 
 fun TrackResponse.toModel() = TrackListModel(
     tracks = this.data.map {
@@ -24,7 +24,7 @@ fun TrackResponse.toModel() = TrackListModel(
 data class Track(
     @SerializedName("id")
     val id: Long,
-    @SerializedName("readeable")
+    @SerializedName("readable")
     val isReadable: Boolean,
     @SerializedName("title")
     val title: String,
@@ -68,9 +68,9 @@ fun Track.toModel(): TrackModel = TrackModel(
 
 data class TrackArtist(
     @SerializedName("id")
-    val id : Int,
+    val id: Int,
     @SerializedName("name")
-    val name : String,
+    val name: String,
     @SerializedName("trackList")
     val trackList: String,
     @SerializedName("type")

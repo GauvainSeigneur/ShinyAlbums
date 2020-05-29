@@ -8,11 +8,11 @@ abstract class BaseResponse {
 
 data class ErrorResponse(
     @SerializedName("type")
-    val type : String,
+    val type: String,
     @SerializedName("message")
-    val message : String,
+    val message: String,
     @SerializedName("code")
-    val code : Int
+    val code: Int
 )
 
 

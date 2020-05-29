@@ -186,7 +186,6 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 adaptColorFromCover(ImageUtils.drawableToBitmap(detailsCoverImageView.drawable))
                 return false
             }
-
         })
     }
 

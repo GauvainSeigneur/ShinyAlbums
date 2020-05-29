@@ -1,12 +1,26 @@
 package com.gauvain.seigneur.domain.mock
 
-import com.gauvain.seigneur.domain.model.AlbumModel
-import com.gauvain.seigneur.domain.model.AlbumPaginedModel
-import com.gauvain.seigneur.domain.model.ArtistModel
+import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.toDate
+import java.util.concurrent.TimeUnit
 
 object ProviderModelMock {
+
+    fun createTrackListModel(): TrackListModel = TrackListModel(
+        tracks = listOf(
+            TrackModel(
+                id = 313646L,
+                isReadable = true,
+                title = "Chinese man",
+                duration = TimeUnit.SECONDS.toMillis(215),
+                position = 12,
+                artist = "Chinese Man",
+                isExplicitLyrics = false
+            )
+        ),
+        total = 1
+    )
 
     fun createAlbumPaginedModel() = AlbumPaginedModel(
         albums = listOf(

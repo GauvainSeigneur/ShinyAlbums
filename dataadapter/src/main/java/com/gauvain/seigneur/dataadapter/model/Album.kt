@@ -42,12 +42,11 @@ data class Album(
     val artist: Artist,
     @SerializedName("alternative")
     val alternative: Alternative?
-
 )
 
 data class Alternative(
     @SerializedName("id")
-    val id:Long,
+    val id: Long,
     @SerializedName("available")
     val available: Boolean
 )
@@ -73,8 +72,8 @@ fun Album.toModel() = AlbumModel(
     artist = this.artist.toModel()
 )
 
-private fun getTrackListId(album :Album):Long =
-    album.alternative?.id ?:album.id
+private fun getTrackListId(album: Album): Long =
+    album.alternative?.id ?: album.id
 
-private fun getIsAvailable(album :Album):Boolean =
-    album.alternative?.available ?:album.available
+private fun getIsAvailable(album: Album): Boolean =
+    album.alternative?.available ?: album.available

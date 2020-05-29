@@ -10,7 +10,7 @@ import com.gauvain.seigneur.domain.provider.GetUserAlbumsProvider
 import retrofit2.Response
 
 class GetUserAlbumsAdapter(private val service: DeezerService) :
-    GetUserAlbumsProvider  {
+    GetUserAlbumsProvider {
 
     override fun getUserAlbums(userId: String, page: Int): AlbumPaginedModel {
         val result = runCatching {
@@ -21,11 +21,14 @@ class GetUserAlbumsAdapter(private val service: DeezerService) :
         return handleResult(result)
     }
 
-    private fun handleResult(result: Result<Response<Albums>>): AlbumPaginedModel{
+    private fun handleResult(result: Result<Response<Albums>>): AlbumPaginedModel {
         return result.run {
             getOrNull()?.body().let { response ->
                 if (response?.errorResponse != null) {
-                    throw GetUserAlbumsException(RequestExceptionType.FORMATTED_ERROR, response.errorResponse.message)
+                    throw GetUserAlbumsException(
+                        RequestExceptionType.FORMATTED_ERROR,
+                        response.errorResponse.message
+                    )
                 } else {
                     response?.data?.let {
                         response.toModel()

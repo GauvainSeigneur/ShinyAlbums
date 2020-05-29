@@ -22,5 +22,4 @@ internal class GetAlbumTracksUseCaseImpl(private val provider: GetAlbumTracksPro
             RequestExceptionType.FORMATTED_ERROR -> Outcome.Error(ErrorType.ERROR_FORMATTED)
             else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)
         }
-
 }

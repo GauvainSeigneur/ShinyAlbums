@@ -10,7 +10,11 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.gauvain.seigneur.shinyalbums.R
 
-fun ImageView.loadCover(context: Context, url: String?, listener:RequestListener<Drawable>?=null) {
+fun ImageView.loadCover(
+    context: Context,
+    url: String?,
+    listener: RequestListener<Drawable>? = null
+) {
     Glide.with(context)
         .load(url)
         .listener(listener)

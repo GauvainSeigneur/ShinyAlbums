@@ -22,5 +22,4 @@ internal class GetUserAlbumsUseCaseImpl(private val provider: GetUserAlbumsProvi
             RequestExceptionType.FORMATTED_ERROR -> Outcome.Error(ErrorType.ERROR_FORMATTED)
             else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)
         }
-
 }

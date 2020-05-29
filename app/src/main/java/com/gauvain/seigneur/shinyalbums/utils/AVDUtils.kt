@@ -54,7 +54,6 @@ fun ImageView.startVectorAnimation() {
         val avd = this.drawable as? Animatable2Compat
         avd?.start()
     }
-
 }
 
 fun AppCompatImageView.stopVectorAnimation() {

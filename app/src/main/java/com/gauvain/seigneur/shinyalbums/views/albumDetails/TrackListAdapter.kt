@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.gauvain.seigneur.presentation.model.TrackItemData
 
-class TrackListAdapter(): ListAdapter<TrackItemData, TrackItemViewHolder>(diffCallback) {
+class TrackListAdapter() : ListAdapter<TrackItemData, TrackItemViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackItemViewHolder {
         return TrackItemViewHolder(
@@ -21,7 +21,6 @@ class TrackListAdapter(): ListAdapter<TrackItemData, TrackItemViewHolder>(diffCa
     override fun onBindViewHolder(holder: TrackItemViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<TrackItemData>() {

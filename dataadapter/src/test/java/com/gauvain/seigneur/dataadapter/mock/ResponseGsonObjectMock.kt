@@ -1,9 +1,49 @@
 package com.gauvain.seigneur.dataadapter.mock
+
 import com.gauvain.seigneur.dataadapter.model.Albums
+import com.gauvain.seigneur.dataadapter.model.TrackResponse
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
 object ResponseGsonObjectMock {
+
+    fun createAlbumTracksSuccessResponse(): TrackResponse {
+        val type = object : TypeToken<TrackResponse>() {
+        }.type
+        return GsonBuilder().create().fromJson(
+            """
+                {
+                    "data": [
+                        {
+                            "id": 313646,
+                            "readable": true,
+                            "title": "Chinese man",
+                            "title_short": "Chinese man",
+                            "title_version": "",
+                            "isrc": "FR6V80312847",
+                            "link": "http://www.deezer.com/track/313646",
+                            "duration": 215,
+                            "track_position": 12,
+                            "disk_number": 1,
+                            "rank": 384459,
+                            "explicit_lyrics": false,
+                            "explicit_content_lyrics": 0,
+                            "explicit_content_cover": 2,
+                            "preview": "http://cdn-preview-b.deezer.com/stream/c-b056f5edc553e92f2251a38b7ffea352-10.mp3",
+                            "artist": {
+                                "id": 58801,
+                                "name": "Chinese Man",
+                                "tracklist": "http://api.deezer.com/2.0/artist/58801/top?limit=50",
+                                "type": "artist"
+                            },
+                            "type": "track"
+                        }
+                    ],
+                    "total": 1
+                }
+                    """.trimIndent(), type
+        )
+    }
 
     fun createSuccessAlbumResponse(): Albums {
         val listType = object : TypeToken<Albums>() {
@@ -50,6 +90,22 @@ object ResponseGsonObjectMock {
         )
     }
 
+    fun createTrackListErrorResponse(): TrackResponse {
+        val wantedObject = object : TypeToken<TrackResponse>() {
+        }.type
+        return GsonBuilder().create().fromJson(
+            """
+                {
+                 "error": {
+                       "type": "DataException",
+                       "message": "no data",
+                       "code": 800
+                   }
+                }
+                    """.trimIndent(), wantedObject
+        )
+    }
+
     fun createErrorResponse(): Albums {
         val wantedObject = object : TypeToken<Albums>() {
         }.type
@@ -76,4 +132,17 @@ object ResponseGsonObjectMock {
                     """.trimIndent(), wantedObject
         )
     }
+
+
+    fun createTrackListNullBodyResponse(): TrackResponse {
+        val wantedObject = object : TypeToken<TrackResponse>() {
+        }.type
+        return GsonBuilder().create().fromJson(
+            """
+                {
+                }
+                    """.trimIndent(), wantedObject
+        )
+    }
+
 }

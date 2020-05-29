@@ -14,7 +14,6 @@ interface DeezerService {
         index: Int
     ): Call<Albums>
 
-
     @GET("album/{albumId}/tracks")
     fun getAlbumTracks(
         @Path(value = "albumId", encoded = true)

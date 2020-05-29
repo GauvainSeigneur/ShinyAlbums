@@ -17,7 +17,6 @@ val remoteDataSourceModule = module {
         }
         ).setLevel(HttpLoggingInterceptor.Level.BODY)
     }
-
     //set as factory in order to update GetTokenAdapter.constToken value when it is done
     factory {
         OkHttpClient.Builder()

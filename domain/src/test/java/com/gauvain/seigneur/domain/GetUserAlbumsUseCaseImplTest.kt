@@ -80,5 +80,4 @@ class GetUserAlbumsUseCaseImplTest {
             assertThat(outcome).isEqualTo(Outcome.Error(ErrorType.ERROR_FORMATTED))
         }
     }
-
 }

@@ -10,7 +10,7 @@ import com.gauvain.seigneur.domain.provider.GetAlbumTracksProvider
 import retrofit2.Response
 
 class GetAlbumTracksAdapter(private val service: DeezerService) :
-    GetAlbumTracksProvider  {
+    GetAlbumTracksProvider {
 
     override fun getTracks(albumId: Long): TrackListModel {
         val result = runCatching {
@@ -21,12 +21,14 @@ class GetAlbumTracksAdapter(private val service: DeezerService) :
         return handleResult(result)
     }
 
-
-    private fun handleResult(result: Result<Response<TrackResponse>>): TrackListModel{
+    private fun handleResult(result: Result<Response<TrackResponse>>): TrackListModel {
         return result.run {
             getOrNull()?.body().let { response ->
                 if (response?.errorResponse != null) {
-                    throw GetAlbumTracksException(RequestExceptionType.FORMATTED_ERROR, response.errorResponse.message)
+                    throw GetAlbumTracksException(
+                        RequestExceptionType.FORMATTED_ERROR,
+                        response.errorResponse.message
+                    )
                 } else {
                     response?.data?.let {
                         response.toModel()
