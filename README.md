@@ -42,9 +42,7 @@ This module includes Activity, fragment or UI related widgets. It observes data 
 layer and can call function of ViewModel.
 
 ## State
-I have implemented the online mode and add some tests on adapter and useCase. But I didn't have
-enough time to implement offline mode, have a better covergae of my existing tests and add some
-for the viewModel.
+WIP
 
 ## Licence
 ```
