@@ -5,7 +5,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bigLoader"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/loading_icon_big_size"
         android:layout_gravity="center"
         app:srcCompat="@drawable/avd_equalizer_loader"/>
 

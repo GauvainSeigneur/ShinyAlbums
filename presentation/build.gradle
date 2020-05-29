@@ -11,7 +11,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -37,6 +37,9 @@ dependencies {
     implementation project(':dataadapter')
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.core:core-ktx:$ktx_version"
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "com.google.android.material:material:$material_version"
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
 

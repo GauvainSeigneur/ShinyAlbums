@@ -39,11 +39,21 @@ data class Album(
     @SerializedName("type")
     val type: String,
     @SerializedName("artist")
-    val artist: Artist
+    val artist: Artist,
+    @SerializedName("alternative")
+    val alternative: Alternative?
+)
+
+data class Alternative(
+    @SerializedName("id")
+    val id: Long,
+    @SerializedName("available")
+    val available: Boolean
 )
 
 fun Album.toModel() = AlbumModel(
     id = this.id,
+    trackListId = getTrackListId(this),
     title = this.title,
     link = this.link,
     cover = this.cover,
@@ -54,10 +64,16 @@ fun Album.toModel() = AlbumModel(
     nbTracks = this.nbTracks,
     releaseDate = this.releaseDate.toDate(SERVER_DATE_FORMAT),
     recordType = this.recordType,
-    available = this.available,
+    available = getIsAvailable(this),
     trackList = this.trackList,
     explicitLyrics = this.explicitLyrics,
     timeAdd = this.timeAdd.toDate(),
     type = this.type,
     artist = this.artist.toModel()
 )
+
+private fun getTrackListId(album: Album): Long =
+    album.alternative?.id ?: album.id
+
+private fun getIsAvailable(album: Album): Boolean =
+    album.alternative?.available ?: album.available

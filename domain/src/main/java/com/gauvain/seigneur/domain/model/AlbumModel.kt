@@ -4,6 +4,7 @@ import java.util.*
 
 data class AlbumModel(
     val id: Long,
+    val trackListId: Long,
     val title: String,
     val link: String,
     val cover: String,

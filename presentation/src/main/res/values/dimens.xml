@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- global space parameters-->
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_s">8dp</dimen>
+    <dimen name="space_m">16dp</dimen>
+    <dimen name="space_l">24dp</dimen>
+    <dimen name="space_xl">32dp</dimen>
+    <dimen name="space_xxl">48dp</dimen>
+
+    <dimen name="album_item_cover_size">72dp</dimen>
+    <dimen name="detail_album_item_cover_size">192dp</dimen>
+    <dimen name="detail_album_item_cover_background_size">256dp</dimen>
+    <dimen name="binocular_height">150dp</dimen>
+    <dimen name="normal_icon_size">24dp</dimen>
+
+    <dimen name="loading_icon_mini_size">56dp</dimen>
+    <dimen name="loading_icon_big_size">100dp</dimen>
+
+</resources>

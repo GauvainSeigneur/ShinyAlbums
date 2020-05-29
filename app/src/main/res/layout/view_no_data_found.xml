@@ -11,30 +11,36 @@
     tools:visibility="visible">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/binocularAvdView"
+        android:id="@+id/errorIcon"
         android:contentDescription="@null"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/binocular_height"
         app:srcCompat="@drawable/avd_binocular" />
 
     <TextView
         android:id="@+id/errorTitle"
+        style="@style/Typography.TextAppearance.Headline1"
         android:textAlignment="center"
+        android:paddingStart="@dimen/space_m"
+        android:paddingEnd="@dimen/space_m"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Oops... Data not found"/>
 
     <TextView
         android:id="@+id/errorDesc"
+        style="@style/Typography.TextAppearance.Body2"
         android:textAlignment="center"
+        android:padding="@dimen/space_m"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Please check your internet connection and retry" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/retryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_l"
         android:text="@string/retry"/>
 
 </LinearLayout>

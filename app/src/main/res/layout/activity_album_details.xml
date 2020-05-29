@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.albumDetails.AlbumDetailsActivity">
+
+    <!-- Use a separate view for the background, rather than on the root view because it is a
+        shared element. Otherwise it interferes with the window enter transition i.e. as it is
+        resized for the shared element transition, many views are considered 'off-screen' so
+        visibility transitions are not run. -->
+    <View
+        android:id="@+id/activityDetailsBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shared_details_background"
+        android:importantForAccessibility="no"
+        android:transitionName="@string/transition_root" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorBackground">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:expandedTitleTextAppearance="@style/Widget.InvisibleExpandedTitle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_arrow_back_white_24dp"/>
+
+            <include layout="@layout/view_album_summary"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/albumTracksRecyclerView"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/trackNumberDurationTextView"
+                android:padding="@dimen/space_m"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--
+        As we can't use windowSharedElementsUseOverlay=true for activity theme because of the
+        shared transition of the background and the fact that the image inside collapsing toolbar
+        will not be shown until the border of the appbar (because of
+        windowSharedElementsUseOverlay set to false) here's a workaround. This is imageView is in the
+        root layout, so the sharedTransition will work even with windowSharedElementsUseOverlay set
+        to false. -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detailsCoverCardView"
+        android:layout_width="@dimen/detail_album_item_cover_size"
+        android:layout_height="@dimen/detail_album_item_cover_size"
+        android:layout_gravity="center_horizontal"
+        android:transitionName="@string/transition_country_flag"
+        android:layout_marginTop="@dimen/space_xxl">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detailsCoverImageView"
+            android:transitionName="@string/transition_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.gauvain.seigneur.shinyalbums.widget.InitialLoadingView
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:id="@+id/initialLoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

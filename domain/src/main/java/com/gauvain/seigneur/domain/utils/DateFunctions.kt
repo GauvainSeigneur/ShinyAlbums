@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 const val SERVER_DATE_FORMAT = "yyyy-MM-dd"
+const val YEAR_FORMAT = "yyyy"
 const val MODEL_TIME_FORMAT = "dd-MM-yyyy hh:mm:ss"
 
 @SuppressWarnings("CalendarInstanceUsage")

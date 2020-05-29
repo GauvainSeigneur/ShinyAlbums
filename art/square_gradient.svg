@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:url(#SVGID_3_);}
+	.st3{fill:url(#SVGID_4_);}
+	.st4{fill:url(#SVGID_5_);}
+	.st5{fill:url(#SVGID_6_);}
+	.st6{fill:url(#SVGID_7_);}
+</style>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="262" y1="176" x2="286" y2="176">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.1448" style="stop-color:#D9D9D9;stop-opacity:0.1448"/>
+	<stop  offset="0.7409" style="stop-color:#3E3E3E;stop-opacity:0.7409"/>
+	<stop  offset="1" style="stop-color:#000000"/>
+</linearGradient>
+<path class="st0" d="M262,164h24v24h-24V164z"/>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="261.7516" y1="176.0528" x2="285.7516" y2="176.0528">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.1448" style="stop-color:#D9D9D9;stop-opacity:0.1448"/>
+	<stop  offset="0.7409" style="stop-color:#3E3E3E;stop-opacity:0.7409"/>
+	<stop  offset="1" style="stop-color:#000000"/>
+</linearGradient>
+<rect x="261.8" y="164.1" class="st1" width="24" height="24"/>
+<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="262" y1="176" x2="286" y2="176">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.1448" style="stop-color:#D9D9D9;stop-opacity:0.1448"/>
+	<stop  offset="0.7409" style="stop-color:#3E3E3E;stop-opacity:0.7409"/>
+	<stop  offset="1" style="stop-color:#000000"/>
+</linearGradient>
+<path class="st2" d="M262,164h24v24h-24V164z"/>
+<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="172.0052" y1="-181.415" x2="196.0052" y2="-181.415" gradientTransform="matrix(6.123234e-17 1 -1 6.123234e-17 92.585 -8.0052)">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.1448" style="stop-color:#D9D9D9;stop-opacity:0.1448"/>
+	<stop  offset="0.7409" style="stop-color:#3E3E3E;stop-opacity:0.7409"/>
+	<stop  offset="1" style="stop-color:#000000"/>
+</linearGradient>
+<polygon class="st3" points="262,188 262,164 286,164 286,188 "/>
+<linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="-15.8096" y1="10.2691" x2="-39.8096" y2="10.2691">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.1448" style="stop-color:#D9D9D9;stop-opacity:0.1448"/>
+	<stop  offset="0.7409" style="stop-color:#3E3E3E;stop-opacity:0.7409"/>
+	<stop  offset="1" style="stop-color:#000000"/>
+</linearGradient>
+<rect x="-39.8" y="-1.7" class="st4" width="24" height="24"/>
+<linearGradient id="SVGID_6_" gradientUnits="userSpaceOnUse" x1="66.7382" y1="0" x2="66.7382" y2="24">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.1448" style="stop-color:#D9D9D9;stop-opacity:0.1448"/>
+	<stop  offset="0.7409" style="stop-color:#3E3E3E;stop-opacity:0.7409"/>
+	<stop  offset="1" style="stop-color:#000000"/>
+</linearGradient>
+<rect x="54.7" class="st5" width="24" height="24"/>
+<radialGradient id="SVGID_7_" cx="12" cy="12" r="12" gradientUnits="userSpaceOnUse">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="8.899862e-02" style="stop-color:#D7D7D7;stop-opacity:8.899862e-02"/>
+	<stop  offset="0.2232" style="stop-color:#A1A0A1;stop-opacity:0.2232"/>
+	<stop  offset="0.3586" style="stop-color:#727172;stop-opacity:0.3586"/>
+	<stop  offset="0.4926" style="stop-color:#4C4B4C;stop-opacity:0.4926"/>
+	<stop  offset="0.6247" style="stop-color:#2E2D2E;stop-opacity:0.6247"/>
+	<stop  offset="0.7545" style="stop-color:#191819;stop-opacity:0.7545"/>
+	<stop  offset="0.8809" style="stop-color:#0C0B0C;stop-opacity:0.8809"/>
+	<stop  offset="1" style="stop-color:#080708"/>
+</radialGradient>
+<rect class="st6" width="24" height="24"/>
+</svg>

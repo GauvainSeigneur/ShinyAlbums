@@ -1,20 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/userAlbumItemView"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/userAlbumItemView"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
 
+    <!-- Use a separate view for the background, rather than on the root view because it is a
+    shared element. Otherwise it interferes with the window enter transition i.e. as it is
+    resized for the shared element transition, many views are considered 'off-screen' so
+    visibility transitions are not run. -->
+    <View
+        android:id="@+id/itemBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="@string/transition_root"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/moreMenuIcon"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/colorBlackLighter"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_width="@dimen/normal_icon_size"
+        android:layout_height="@dimen/normal_icon_size"
+        app:srcCompat="@drawable/ic_more_vert_white_24dp"
+        android:layout_marginEnd="@dimen/space_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:id="@+id/titleTextView"
+        android:textAppearance="@style/TextAppearance.Item.Title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:ellipsize="end"
-        android:paddingBottom="56dp"/>
+        android:maxLines="1"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingStart="@dimen/space_m"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toTopOf="@+id/artistTextView"
+        app:layout_constraintEnd_toStartOf="@id/moreMenuIcon"
+        app:layout_constraintStart_toEndOf="@id/coverCardView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Album title" />
+
+    <TextView
+        android:id="@+id/artistTextView"
+        android:textAppearance="@style/TextAppearance.Item.SubTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingStart="@dimen/space_m"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/moreMenuIcon"
+        app:layout_constraintStart_toEndOf="@id/coverCardView"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        tools:text="Artist Name" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/coverCardView"
+        android:layout_width="@dimen/album_item_cover_size"
+        android:layout_height="@dimen/album_item_cover_size"
+        android:layout_margin="@dimen/space_m"
+        android:transitionName="@string/transition_country_flag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/coverImageView"
+            android:transitionName="@string/transition_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

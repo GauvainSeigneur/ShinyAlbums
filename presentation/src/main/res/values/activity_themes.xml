@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="ShinyAlbumsTheme.Transparent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="ShinyAlbumsTheme.SlpashActivityTheme">
+    </style>
+
+    <!-- Theme for ActivityDetail (applying some transition) -->
+    <style name="ShinyAlbumsTheme.Transparent.AlbumDetails"/>
+
+    <!-- Theme for ActivityMain (applying some transition) -->
+    <style name="ShinyAlbumsTheme.UserAlbums">
+        <item name="android:windowBackground">@color/colorBackground</item>
+    </style>
+</resources>

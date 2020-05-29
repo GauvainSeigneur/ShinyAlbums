@@ -43,10 +43,11 @@ dependencies {
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
     implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation 'androidx.palette:palette:1.0.0'
 
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
-    
+
     implementation("com.squareup.okhttp3:okhttp:$okhttp_version") {
         force = true
     }
@@ -54,8 +55,10 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    implementation "io.coil-kt:coil:0.10.1"
-    implementation "io.coil-kt:coil-svg:0.10.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    implementation "com.github.bumptech.glide:glide:4.11.0"
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
@@ -75,4 +78,10 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidx_ext_junit_version"
     androidTestImplementation "androidx.test:rules:$androidx_test_rules"
     androidTestImplementation "androidx.test:runner:$androidx_test_runner"
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

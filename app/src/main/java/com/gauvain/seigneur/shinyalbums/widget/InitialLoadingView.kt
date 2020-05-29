@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import com.gauvain.seigneur.shinyalbums.R
 import com.gauvain.seigneur.shinyalbums.utils.AVDUtils
 import com.gauvain.seigneur.shinyalbums.utils.startVectorAnimation
@@ -32,13 +34,27 @@ class InitialLoadingView @JvmOverloads constructor(
         showLoader(true)
     }
 
-    fun setError(title: String?, desc: String?, buttonText: String?, retryListener: () -> Unit) {
+    fun setError(
+        title: String?,
+        desc: String?,
+        buttonText: String?,
+        @DrawableRes
+        iconRes: Int?,
+        retryListener: () -> Unit
+    ) {
         this.visibility = View.VISIBLE
         setErrorInfo(title, desc)
+        iconRes?.let {
+            errorIcon.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+        }
         showError(true)
         showLoader(false)
-        retryButton.text = buttonText ?: context.getString(R.string.retry)
-        retryButton.setOnClickListener { retryListener() }
+        if (buttonText != null) {
+            retryButton.text = buttonText
+            retryButton.setOnClickListener { retryListener() }
+        } else {
+            retryButton.visibility = View.GONE
+        }
     }
 
     private fun showLoader(isVisible: Boolean) {
@@ -54,7 +70,7 @@ class InitialLoadingView @JvmOverloads constructor(
     private fun showError(isVisible: Boolean) {
         if (isVisible) {
             errorView.visibility = View.VISIBLE
-            binocularAvdView.startVectorAnimation()
+            errorIcon.startVectorAnimation()
         } else {
             errorView.visibility = View.GONE
         }

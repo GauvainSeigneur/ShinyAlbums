@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:duration="@integer/animation_duration">
+
+    <!-- Start scaling & fading RV to give the impression of zoom out -->
+    <transitionSet>
+        <targets>
+            <target android:targetId="@id/userAlbumsRecyclerView" />
+        </targets>
+        <transition
+                class="com.gauvain.seigneur.shinyalbums.animation.PopTransition"
+                app:startScale="1.0"
+                app:endScale="0.75"/>
+        <transition
+                class="com.gauvain.seigneur.shinyalbums.animation.FadeTransition"
+                app:startAlpha="1.0"
+                app:endAlpha="0.3"/>
+    </transitionSet>
+
+    <transitionSet>
+        <targets>
+            <target android:targetId="@id/appBarLayout" />
+        </targets>
+        <transition
+            class="com.gauvain.seigneur.shinyalbums.animation.FadeTransition"
+            app:startAlpha="1.0"
+            app:endAlpha="0.3"/>
+    </transitionSet>
+
+</transitionSet>

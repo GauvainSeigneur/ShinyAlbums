@@ -13,7 +13,7 @@ object AVDUtils {
 
     fun startLoadingAnimation(imageView: AppCompatImageView, start: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val loaderAvd = imageView.drawable as AnimatedVectorDrawable
+            val loaderAvd = imageView.drawable as? AnimatedVectorDrawable
             if (start) {
                 AnimatedVectorDrawableCompat.registerAnimationCallback(
                     loaderAvd,
@@ -29,28 +29,39 @@ object AVDUtils {
                 imageView.stopVectorAnimation()
             }
         } else {
-            val loaderAvd = imageView.drawable as Animatable2Compat
+            val loaderAvd = imageView.drawable as? Animatable2Compat
             if (start) {
-                loaderAvd.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
+                loaderAvd?.registerAnimationCallback(object : Animatable2Compat.AnimationCallback
+                    () {
                     override fun onAnimationEnd(drawable: Drawable?) {
                         super.onAnimationEnd(drawable)
                         imageView.post { loaderAvd.start() }
                     }
                 })
-                loaderAvd.start()
+                loaderAvd?.start()
             } else {
-                loaderAvd.stop()
+                loaderAvd?.stop()
             }
         }
     }
 }
 
 fun ImageView.startVectorAnimation() {
-    val avd = this.drawable as? Animatable
-    avd?.start()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val avd = this.drawable as? Animatable
+        avd?.start()
+    } else {
+        val avd = this.drawable as? Animatable2Compat
+        avd?.start()
+    }
 }
 
 fun AppCompatImageView.stopVectorAnimation() {
-    val avd = this.drawable as? Animatable
-    avd?.stop()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val avd = this.drawable as? Animatable
+        avd?.stop()
+    } else {
+        val avd = this.drawable as? Animatable2Compat
+        avd?.stop()
+    }
 }

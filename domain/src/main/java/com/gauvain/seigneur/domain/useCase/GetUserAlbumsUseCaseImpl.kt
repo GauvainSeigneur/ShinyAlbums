@@ -18,11 +18,8 @@ internal class GetUserAlbumsUseCaseImpl(private val provider: GetUserAlbumsProvi
 
     private fun handleException(e: GetUserAlbumsException): Outcome.Error<ErrorType> =
         when (e.type) {
-            RequestExceptionType.UNKNOWN_HOST -> Outcome.Error(ErrorType.ERROR_UNKNOWN_HOST)
-            RequestExceptionType.CONNECTION_LOST -> Outcome.Error(ErrorType.ERROR_CONNECTION_LOST)
-            RequestExceptionType.UNAUTHORIZED -> Outcome.Error(ErrorType.ERROR_UNAUTHORIZED)
-            RequestExceptionType.SERVER_INTERNAL_ERROR -> Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER)
+            RequestExceptionType.BODY_NULL -> Outcome.Error(ErrorType.ERROR_BODY)
+            RequestExceptionType.FORMATTED_ERROR -> Outcome.Error(ErrorType.ERROR_FORMATTED)
             else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)
         }
-
 }
