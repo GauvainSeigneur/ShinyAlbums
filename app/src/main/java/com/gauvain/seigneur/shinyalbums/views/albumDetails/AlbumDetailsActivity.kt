@@ -61,7 +61,6 @@ class AlbumDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         data = intent.getParcelableExtra(DETAILS_DATA)
         viewModel.getSummaryInfo()
-        viewModel.getAlbumTracks()
         setContentView(R.layout.activity_album_details)
         handleTransition()
         initViews()
@@ -88,9 +87,10 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 is LiveDataState.Success -> {
                     loadCover(it.data.cover)
                     albumTitleTextView.text = it.data.albumTitle
-                    albumArtistYearTextView.text = it.data.albumArtistAndYear.getFormattedString(
-                        this
-                    )
+                    albumArtistYearTextView.text = it.data.albumArtistAndYear
+                        .getFormattedString(this)
+                    trackNumberDurationTextView.text = it.data.trackNumbersTotalDuration
+                        .getFormattedString(this)
                 }
                 is LiveDataState.Error -> {
                     Toast.makeText(
@@ -109,6 +109,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                     detailsCoverCardView.alpha = 1f
                 }
                 SharedTransitionState.ENDED -> {
+                    viewModel.getAlbumTracks()
                     recolorBackground()
                 }
             }
@@ -119,6 +120,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 is LiveDataState.Success -> {
                     initialLoadingView.visibility = View.GONE
                     trackListAdapter.submitList(it.data.tracks)
+                    trackNumberDurationTextView.visibility = View.VISIBLE
                 }
                 is LiveDataState.Error -> {
                     initialLoadingView.setLoaded()
@@ -132,7 +134,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
         })
 
         viewModel.trackLoadingState.observe(this, Observer {
-            when(it) {
+            when (it) {
                 LoadingState.IS_LOADING -> {
                     initialLoadingView.visibility = View.VISIBLE
                     initialLoadingView.setLoading()

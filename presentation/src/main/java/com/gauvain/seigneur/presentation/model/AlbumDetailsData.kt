@@ -6,6 +6,7 @@ import com.gauvain.seigneur.domain.model.AlbumModel
 import com.gauvain.seigneur.domain.utils.YEAR_FORMAT
 import com.gauvain.seigneur.domain.utils.formatTo
 import com.gauvain.seigneur.presentation.R
+import com.gauvain.seigneur.presentation.utils.QuantityStringPresenter
 import com.gauvain.seigneur.presentation.utils.StringPresenter
 import kotlinx.android.parcel.Parcelize
 
@@ -15,7 +16,8 @@ import kotlinx.android.parcel.Parcelize
 data class AlbumDetailsSummary(
     val cover: String,
     val albumTitle: String,
-    val albumArtistAndYear: StringPresenter
+    val albumArtistAndYear: StringPresenter,
+    val trackNumbersTotalDuration : QuantityStringPresenter
 )
 
 /**
@@ -50,7 +52,9 @@ fun AlbumDetailsData.toSummary() = AlbumDetailsSummary(
         R.string.album_artist_year,
         this.artistName,
         this.releaseYear
-    )
+    ),
+    trackNumbersTotalDuration = QuantityStringPresenter(R.plurals.albums_tracks_duration,
+        this.trackNumber, this.trackNumber)
 )
 
 fun AlbumModel.toAlbumDetailData(): AlbumDetailsData = AlbumDetailsData(

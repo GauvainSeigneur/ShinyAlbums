@@ -7,4 +7,9 @@
 
     <string name="total_tracks">%d titles</string>
     <string name="album_artist_year">%1$s - %2$s</string>
+
+    <plurals name="albums_tracks_duration">
+        <item quantity="one">%d track</item>
+        <item quantity="other">%d tracks</item>
+    </plurals>
 </resources>
