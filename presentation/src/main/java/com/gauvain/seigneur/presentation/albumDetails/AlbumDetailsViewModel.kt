@@ -33,7 +33,7 @@ class AlbumDetailsViewModel(
     fun getSummaryInfo() {
         detailsData?.let {
             summaryData.value = LiveDataState.Success(it.toSummary())
-        }?: setNoDataError()
+        } ?: setNoDataError()
     }
 
     private fun setNoDataError() {
@@ -41,33 +41,53 @@ class AlbumDetailsViewModel(
     }
 
     fun getAlbumTracks() {
-        detailsData?.albumTrackListId?.let {
-            trackLoadingState.value = LoadingState.IS_LOADING
-            viewModelScope.launch(Dispatchers.Main) {
-                val result = withContext(Dispatchers.IO) {
-                    useCase.invoke(it)
-                }
-                trackLoadingState.value = LoadingState.IS_LOADED
-                when (result) {
-                    is Outcome.Success -> {
-                        tracksData.value = LiveDataState.Success(result.data.toTrackData())
-                    }
-                    is Outcome.Error -> {
-                        tracksData.value = LiveDataState.Error(
-                            ErrorData(
-                                ErrorDataType.RECOVERABLE,
-                                StringPresenter(R.string.error_fetch_data_title),
-                                StringPresenter(R.string.error_fetch_data_description),
-                                StringPresenter(R.string.retry)
-                            )
-                        )
-                    }
-                }
+        detailsData?.let {
+            if (it.available) {
+                fetchAlbumTracks(it.albumTrackListId)
+            } else {
+                setNotAvailableValue()
             }
         } ?: setNoDataValue()
     }
 
+    private fun fetchAlbumTracks(id: Long) {
+        viewModelScope.launch(Dispatchers.Main) {
+            trackLoadingState.value = LoadingState.IS_LOADING
+            val result = withContext(Dispatchers.IO) {
+                useCase.invoke(id)
+            }
+            trackLoadingState.value = LoadingState.IS_LOADED
+            when (result) {
+                is Outcome.Success -> {
+                    tracksData.value = LiveDataState.Success(result.data.toTrackData())
+                }
+                is Outcome.Error -> {
+                    tracksData.value = LiveDataState.Error(
+                        ErrorData(
+                            ErrorDataType.RECOVERABLE,
+                            StringPresenter(R.string.error_fetch_data_title),
+                            StringPresenter(R.string.error_fetch_data_description),
+                            StringPresenter(R.string.retry)
+                        )
+                    )
+                }
+            }
+        }
+    }
+
     private fun setNoDataValue() {
         tracksData.value = LiveDataState.Error(ErrorData(ErrorDataType.NOT_RECOVERABLE))
+    }
+
+    private fun setNotAvailableValue() {
+        tracksData.value = LiveDataState.Error(
+            ErrorData(
+                ErrorDataType.INFORMATIVE,
+                StringPresenter(R.string.error_tracks_not_available_title),
+                StringPresenter(R.string.error_tracks_not_available_description),
+                null,
+                R.drawable.ic_tracks_not_available
+            )
+        )
     }
 }

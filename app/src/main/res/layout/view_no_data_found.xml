@@ -11,7 +11,7 @@
     tools:visibility="visible">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/binocularAvdView"
+        android:id="@+id/errorIcon"
         android:contentDescription="@null"
         android:layout_width="match_parent"
         android:layout_height="@dimen/binocular_height"

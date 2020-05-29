@@ -5,6 +5,10 @@
     <string name="error_fetch_data_description">Please check your internet connection and retry.</string>
     <string name="retry">retry</string>
 
+    <string name="error_tracks_not_available_title">Not available</string>
+    <string name="error_tracks_not_available_description">Sorry, this album is not available
+        to listen right now.</string>
+
     <string name="total_tracks">%d titles</string>
     <string name="album_artist_year">%1$s - %2$s</string>
 
