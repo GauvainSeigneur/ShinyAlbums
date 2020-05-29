@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.dataadapter.adapter
 
-import android.util.Log
 import com.gauvain.seigneur.dataadapter.model.TrackResponse
 import com.gauvain.seigneur.dataadapter.model.toModel
 import com.gauvain.seigneur.dataadapter.service.DeezerService
@@ -17,7 +16,6 @@ class GetAlbumTracksAdapter(private val service: DeezerService) :
         val result = runCatching {
             service.getAlbumTracks(albumId).execute()
         }.onFailure {
-            Log.d("getTracks", "oops $it")
             throw GetAlbumTracksException(RequestExceptionType.UNKNOWN_ERROR, it.message)
         }
         return handleResult(result)
@@ -28,13 +26,9 @@ class GetAlbumTracksAdapter(private val service: DeezerService) :
         return result.run {
             getOrNull()?.body().let { response ->
                 if (response?.errorResponse != null) {
-                    //73561
-                    //71171
-                    Log.d("getTracks", "null $response")
                     throw GetAlbumTracksException(RequestExceptionType.FORMATTED_ERROR, response.errorResponse.message)
                 } else {
                     response?.data?.let {
-                        Log.d("getTracks", "data $it")
                         response.toModel()
                     }
                 } ?: throw GetAlbumTracksException(RequestExceptionType.BODY_NULL, "Body null")

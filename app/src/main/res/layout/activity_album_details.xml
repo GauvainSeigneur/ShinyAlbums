@@ -76,4 +76,11 @@
 
     </androidx.cardview.widget.CardView>
 
+    <com.gauvain.seigneur.shinyalbums.widget.InitialLoadingView
+        android:id="@+id/initialLoadingView"
+        android:paddingTop="@dimen/detail_album_item_cover_size"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

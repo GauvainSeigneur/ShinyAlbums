@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorBlackLighter">#989598</color>
     <color name="colorBlackLight">#312b31</color>
     <color name="colorBlack">#080708</color>
     <color name="colorBlackDark">#000000</color>
@@ -27,6 +28,9 @@
     <!-- color for toolbar, cardview, etc. -->
     <color name="colorSurface">@color/colorBlack</color>
     <color name="colorOnSurface">@color/colorWhite</color>
+
+    <color name="colorBinocularFront">#454045</color>
+<color name="colorBinocularBack">#5a555a</color>
 
     <color name="colorError">#E56B51</color>
     <color name="colorOnError">#FFFFFF</color>

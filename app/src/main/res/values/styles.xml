@@ -2,4 +2,15 @@
 
     <style name="Widget" parent="ShinyAlbumsTheme" />
 
+    <style name="Widget.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/selector_button_background_secondary</item>
+        <item name="iconTint">@color/selector_button_icon_secondary</item>
+        <item name="android:textColor">@color/selector_button_text_secondary</item>
+    </style>
+
+    <style name="Widget.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconTint">@color/selector_text_button_icon_secondary</item>
+        <item name="android:textColor">@color/selector_text_button_text_secondary</item>
+    </style>
+
 </resources>

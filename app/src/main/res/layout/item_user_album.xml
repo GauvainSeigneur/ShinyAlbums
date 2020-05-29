@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -24,6 +25,20 @@
         app:layout_constraintTop_toTopOf="parent"
         android:transitionName="@string/transition_root"/>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/moreMenuIcon"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/colorBlackLighter"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_width="@dimen/normal_icon_size"
+        android:layout_height="@dimen/normal_icon_size"
+        app:srcCompat="@drawable/ic_more_vert_white_24dp"
+        android:layout_marginEnd="@dimen/space_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
@@ -34,7 +49,7 @@
         android:paddingStart="@dimen/space_m"
         android:gravity="bottom"
         app:layout_constraintBottom_toTopOf="@+id/artistTextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/moreMenuIcon"
         app:layout_constraintStart_toEndOf="@id/coverCardView"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Album title" />
@@ -46,7 +61,7 @@
         android:paddingEnd="@dimen/space_s"
         android:paddingStart="@dimen/space_m"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/moreMenuIcon"
         app:layout_constraintStart_toEndOf="@id/coverCardView"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         tools:text="Artist Name" />
