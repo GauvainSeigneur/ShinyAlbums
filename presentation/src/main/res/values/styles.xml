@@ -18,4 +18,17 @@
         <item name="android:textSize">0sp</item>
     </style>
 
+    <style name="TextAppearance.Item.Title" parent="@style/Typography.TextAppearance.Subtitle2"/>
+
+    <style name="TextAppearance.Item.SubTitle" parent="@style/Typography.TextAppearance.Body2">
+        <item name="android:textColor">@color/colorWhiteDark</item>
+    </style>
+
+    <style name="TextAppearance.Album.Details.Title"
+        parent="@style/Typography.TextAppearance.Headline5"/>
+
+    <style name="TextAppearance.Album.Details.Artist" parent="@style/Typography.TextAppearance.Subtitle1">
+        <item name="android:textColor">@color/colorWhiteDark</item>
+    </style>
+
 </resources>

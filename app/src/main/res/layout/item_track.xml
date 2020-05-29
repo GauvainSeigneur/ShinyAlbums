@@ -14,6 +14,7 @@
 
     <TextView
         android:id="@+id/trackTitleView"
+        android:textAppearance="@style/TextAppearance.Item.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -27,6 +28,7 @@
 
     <TextView
         android:id="@+id/trackArtistTextView"
+        android:textAppearance="@style/TextAppearance.Item.SubTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="1"

@@ -41,6 +41,7 @@
 
     <TextView
         android:id="@+id/titleTextView"
+        android:textAppearance="@style/TextAppearance.Item.Title"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:ellipsize="end"
@@ -56,6 +57,7 @@
 
     <TextView
         android:id="@+id/artistTextView"
+        android:textAppearance="@style/TextAppearance.Item.SubTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingEnd="@dimen/space_s"
