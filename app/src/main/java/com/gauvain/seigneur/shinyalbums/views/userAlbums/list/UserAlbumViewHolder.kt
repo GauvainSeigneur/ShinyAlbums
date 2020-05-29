@@ -17,7 +17,7 @@ class UserAlbumViewHolder(
 
     fun bind(itemData: AlbumItemData?, listener: ItemClickListener) {
         with(itemView) {
-            coverImageView.loadCover(itemData?.cover)
+            coverImageView.loadCover(itemView.context, itemData?.cover)
             titleTextView.text = itemData?.title?: "oops"
             artistTextView.text =  itemData?.artistName
             userAlbumItemView.setOnClickListener {

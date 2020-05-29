@@ -10,6 +10,7 @@
 
     <dimen name="album_item_cover_size">72dp</dimen>
     <dimen name="detail_album_item_cover_size">192dp</dimen>
+    <dimen name="detail_album_item_cover_background_size">256dp</dimen>
     <dimen name="binocular_height">150dp</dimen>
     <dimen name="normal_icon_size">24dp</dimen>
 

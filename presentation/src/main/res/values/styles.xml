@@ -13,4 +13,9 @@
         <item name="android:textColor">@color/selector_text_button_text_secondary</item>
     </style>
 
+    <style name="Widget.InvisibleExpandedTitle" parent="ShinyAlbumsTheme">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:textSize">0sp</item>
+    </style>
+
 </resources>

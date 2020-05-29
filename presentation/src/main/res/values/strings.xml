@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ShinyAlbums</string>
+    <string name="app_name">Shiny Albums</string>
 
     <string name="transition_root" translatable="false">transition_root</string>
     <string name="transition_country_flag" translatable="false">transition_country_flag</string>
