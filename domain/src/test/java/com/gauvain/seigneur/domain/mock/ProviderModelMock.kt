@@ -12,6 +12,7 @@ object ProviderModelMock {
         albums = listOf(
             AlbumModel(
                 id = 49201,
+                trackListId = 49201,
                 title = "Groove Sessions",
                 link = "http://www.deezer.com/album/49201",
                 cover = "http://api.deezer.com/2.0/album/49201/image",

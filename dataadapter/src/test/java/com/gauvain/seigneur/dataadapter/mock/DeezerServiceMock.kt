@@ -1,6 +1,7 @@
 package com.gauvain.seigneur.dataadapter.mock
 
 import com.gauvain.seigneur.dataadapter.model.Albums
+import com.gauvain.seigneur.dataadapter.model.TrackResponse
 import com.gauvain.seigneur.dataadapter.service.DeezerService
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -21,6 +22,10 @@ object DeezerServiceMock {
                 return behaviorDelegate.returning(Calls.failure<Throwable>(t)).getUserAlbums(userId, index)
             }
 
+            override fun getAlbumTracks(albumId: Long): Call<TrackResponse> {
+                return behaviorDelegate.returning(Calls.failure<Throwable>(t)).getAlbumTracks(albumId)
+            }
+
 
         }
 
@@ -28,6 +33,10 @@ object DeezerServiceMock {
         object : DeezerService {
             override fun getUserAlbums(userId: String, index: Int): Call<Albums> {
                 return behaviorDelegate.returningResponse(stats).getUserAlbums(userId, index)
+            }
+
+            override fun getAlbumTracks(albumId: Long): Call<TrackResponse> {
+                return behaviorDelegate.returningResponse(stats).getAlbumTracks(albumId)
             }
         }
 }
