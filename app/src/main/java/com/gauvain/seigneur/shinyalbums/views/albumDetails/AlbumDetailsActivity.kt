@@ -36,11 +36,8 @@ import org.koin.core.parameter.parametersOf
 
 class AlbumDetailsActivity : AppCompatActivity() {
 
-    var d: Drawable? = null
-
     companion object {
         private const val FADE_MAX_VALUE = 1f
-        private const val START_TRANSITION_DELAY = 125L // half transition delay
         private const val DETAILS_DATA = "details_data"
         fun newIntent(
             context: Context,
@@ -155,7 +152,6 @@ class AlbumDetailsActivity : AppCompatActivity() {
 
     private fun handleTransition() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Postpone the shared element enter transition.
             listenSharedEnterTransition()
         } else {
             recolorBackground()

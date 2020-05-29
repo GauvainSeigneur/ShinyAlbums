@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gauvain.seigneur.presentation.model.NextRequestState
 import com.gauvain.seigneur.presentation.model.NextRequestStatus
 import com.gauvain.seigneur.shinyalbums.R
+import com.gauvain.seigneur.shinyalbums.utils.AVDUtils.startLoadingAnimation
 import kotlinx.android.synthetic.main.item_footer.view.*
 
 class FooterViewHolder(
@@ -20,9 +21,20 @@ class FooterViewHolder(
         with(itemView) {
             state?.let {
                 when(it.nextRequestStatus) {
-                    NextRequestStatus.RUNNING -> {}
-                    NextRequestStatus.SUCCESS -> {}
-                    NextRequestStatus.FAILED -> {}
+                    NextRequestStatus.RUNNING -> {
+                        startLoadingAnimation(loadingView, true)
+                        errorView.visibility = View.INVISIBLE
+                    }
+                    NextRequestStatus.SUCCESS -> {
+                        startLoadingAnimation(loadingView, false)
+                        loadingView.visibility = View.GONE
+                        errorView.visibility = View.INVISIBLE
+                    }
+                    NextRequestStatus.FAILED -> {
+                        startLoadingAnimation(loadingView, false)
+                        loadingView.visibility = View.GONE
+                        errorView.visibility = View.VISIBLE
+                    }
                 }
             }
             retryButton.setOnClickListener {

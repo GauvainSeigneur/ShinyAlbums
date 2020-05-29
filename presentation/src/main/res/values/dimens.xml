@@ -14,4 +14,7 @@
     <dimen name="binocular_height">150dp</dimen>
     <dimen name="normal_icon_size">24dp</dimen>
 
+    <dimen name="loading_icon_mini_size">56dp</dimen>
+    <dimen name="loading_icon_big_size">100dp</dimen>
+
 </resources>

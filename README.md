@@ -6,7 +6,7 @@ A mobile application which uses Deezer api to display a list of albums and detai
 * AndroidX
 * Clean Architecture
 * Android Architecture Components - ViewModel, LiveData, Room, Paging
-* Animated vector Drawable
+* AnimatedVectorDrawable
 * Retrofit/Okhttp - Type-safe HTTP client
 * Gson - Serialization & deserialization
 * Coroutine - Asynchronous and non-blocking programming

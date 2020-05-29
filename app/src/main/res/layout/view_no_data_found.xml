@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/errorTitle"
+        style="@style/Typography.TextAppearance.Headline1"
         android:textAlignment="center"
         android:paddingStart="@dimen/space_m"
         android:paddingEnd="@dimen/space_m"
@@ -28,6 +29,7 @@
 
     <TextView
         android:id="@+id/errorDesc"
+        style="@style/Typography.TextAppearance.Body2"
         android:textAlignment="center"
         android:padding="@dimen/space_m"
         android:layout_width="match_parent"

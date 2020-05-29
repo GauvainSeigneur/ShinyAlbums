@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "layers": {
+    "vectorLayer": {
+      "id": "14",
+      "name": "vector",
+      "type": "vector",
+      "width": 24,
+      "height": 24,
+      "children": [
+        {
+          "id": "24",
+          "name": "equalizer_0",
+          "type": "path",
+          "pathData": "M 4 10 L 4 14",
+          "strokeColor": "#1d1d1b",
+          "strokeWidth": 2,
+          "strokeLinecap": "round",
+          "strokeMiterLimit": 10,
+          "trimPathStart": 0.5,
+          "trimPathEnd": 0.5
+        },
+        {
+          "id": "12",
+          "name": "equalizer_1",
+          "type": "path",
+          "pathData": "M 8 6 L 8 18",
+          "strokeColor": "#1d1d1b",
+          "strokeWidth": 2,
+          "strokeLinecap": "round",
+          "strokeMiterLimit": 10,
+          "trimPathStart": 0.5,
+          "trimPathEnd": 0.5
+        },
+        {
+          "id": "60",
+          "name": "equalizer_2",
+          "type": "path",
+          "pathData": "M 12 2 L 12 22",
+          "strokeColor": "#1d1d1b",
+          "strokeWidth": 2,
+          "strokeLinecap": "round",
+          "strokeMiterLimit": 10,
+          "trimPathStart": 0.5,
+          "trimPathEnd": 0.5
+        },
+        {
+          "id": "48",
+          "name": "equalizer_3",
+          "type": "path",
+          "pathData": "M 16 6 L 16 18",
+          "strokeColor": "#1d1d1b",
+          "strokeWidth": 2,
+          "strokeLinecap": "round",
+          "strokeMiterLimit": 10,
+          "trimPathStart": 0.5,
+          "trimPathEnd": 0.5
+        },
+        {
+          "id": "36",
+          "name": "equalizer_4",
+          "type": "path",
+          "pathData": "M 20 10 L 20 14",
+          "strokeColor": "#1d1d1b",
+          "strokeWidth": 2,
+          "strokeLinecap": "round",
+          "strokeMiterLimit": 10,
+          "trimPathStart": 0.5,
+          "trimPathEnd": 0.5
+        }
+      ]
+    },
+    "hiddenLayerIds": []
+  },
+  "timeline": {
+    "animation": {
+      "id": "2",
+      "name": "anim",
+      "duration": 1150,
+      "blocks": [
+        {
+          "id": "95",
+          "layerId": "12",
+          "propertyName": "trimPathEnd",
+          "startTime": 150,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 1
+        },
+        {
+          "id": "96",
+          "layerId": "12",
+          "propertyName": "trimPathStart",
+          "startTime": 150,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 0
+        },
+        {
+          "id": "99",
+          "layerId": "24",
+          "propertyName": "trimPathEnd",
+          "startTime": 0,
+          "endTime": 150,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 1
+        },
+        {
+          "id": "100",
+          "layerId": "24",
+          "propertyName": "trimPathStart",
+          "startTime": 0,
+          "endTime": 150,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 0
+        },
+        {
+          "id": "101",
+          "layerId": "24",
+          "propertyName": "trimPathEnd",
+          "startTime": 150,
+          "endTime": 450,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 1,
+          "toValue": 0.5
+        },
+        {
+          "id": "102",
+          "layerId": "24",
+          "propertyName": "trimPathStart",
+          "startTime": 150,
+          "endTime": 450,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0,
+          "toValue": 0.5
+        },
+        {
+          "id": "103",
+          "layerId": "12",
+          "propertyName": "trimPathEnd",
+          "startTime": 300,
+          "endTime": 600,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 1,
+          "toValue": 0.5
+        },
+        {
+          "id": "104",
+          "layerId": "12",
+          "propertyName": "trimPathStart",
+          "startTime": 300,
+          "endTime": 600,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0,
+          "toValue": 0.5
+        },
+        {
+          "id": "105",
+          "layerId": "60",
+          "propertyName": "trimPathEnd",
+          "startTime": 300,
+          "endTime": 450,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 1
+        },
+        {
+          "id": "107",
+          "layerId": "60",
+          "propertyName": "trimPathStart",
+          "startTime": 300,
+          "endTime": 450,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 0
+        },
+        {
+          "id": "108",
+          "layerId": "60",
+          "propertyName": "trimPathEnd",
+          "startTime": 450,
+          "endTime": 750,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 1,
+          "toValue": 0.5
+        },
+        {
+          "id": "109",
+          "layerId": "60",
+          "propertyName": "trimPathStart",
+          "startTime": 450,
+          "endTime": 750,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0,
+          "toValue": 0.5
+        },
+        {
+          "id": "110",
+          "layerId": "48",
+          "propertyName": "trimPathEnd",
+          "startTime": 450,
+          "endTime": 600,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 1
+        },
+        {
+          "id": "111",
+          "layerId": "48",
+          "propertyName": "trimPathStart",
+          "startTime": 450,
+          "endTime": 600,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 0
+        },
+        {
+          "id": "112",
+          "layerId": "48",
+          "propertyName": "trimPathEnd",
+          "startTime": 600,
+          "endTime": 900,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 1,
+          "toValue": 0.5
+        },
+        {
+          "id": "113",
+          "layerId": "48",
+          "propertyName": "trimPathStart",
+          "startTime": 600,
+          "endTime": 900,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0,
+          "toValue": 0.5
+        },
+        {
+          "id": "114",
+          "layerId": "36",
+          "propertyName": "trimPathEnd",
+          "startTime": 600,
+          "endTime": 750,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 1
+        },
+        {
+          "id": "115",
+          "layerId": "36",
+          "propertyName": "trimPathEnd",
+          "startTime": 750,
+          "endTime": 1150,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 1,
+          "toValue": 0.5
+        },
+        {
+          "id": "116",
+          "layerId": "36",
+          "propertyName": "trimPathStart",
+          "startTime": 600,
+          "endTime": 750,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0.5,
+          "toValue": 0
+        },
+        {
+          "id": "117",
+          "layerId": "36",
+          "propertyName": "trimPathStart",
+          "startTime": 750,
+          "endTime": 1150,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0,
+          "toValue": 0.5
+        }
+      ]
+    }
+  }
+}
