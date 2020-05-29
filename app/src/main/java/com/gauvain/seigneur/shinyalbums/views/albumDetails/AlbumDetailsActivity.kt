@@ -87,10 +87,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 is LiveDataState.Success -> {
                     loadCover(it.data.cover)
                     albumTitleTextView.text = it.data.albumTitle
-                    albumArtistYearTextView.text = it.data.albumArtistAndYear
-                        .getFormattedString(this)
-                    trackNumberDurationTextView.text = it.data.trackNumbersTotalDuration
-                        .getFormattedString(this)
+                    albumArtistYearTextView.text = it.data.albumArtistAndYear.getFormattedString(this)
                 }
                 is LiveDataState.Error -> {
                     Toast.makeText(
@@ -120,7 +117,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 is LiveDataState.Success -> {
                     initialLoadingView.visibility = View.GONE
                     trackListAdapter.submitList(it.data.tracks)
-                    trackNumberDurationTextView.visibility = View.VISIBLE
+                    trackNumberDurationTextView.text = it.data.total.getFormattedString(this)
                 }
                 is LiveDataState.Error -> {
                     initialLoadingView.setLoaded()

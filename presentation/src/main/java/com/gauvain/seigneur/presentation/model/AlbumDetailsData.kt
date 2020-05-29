@@ -16,8 +16,7 @@ import kotlinx.android.parcel.Parcelize
 data class AlbumDetailsSummary(
     val cover: String,
     val albumTitle: String,
-    val albumArtistAndYear: StringPresenter,
-    val trackNumbersTotalDuration : QuantityStringPresenter
+    val albumArtistAndYear: StringPresenter
 )
 
 /**
@@ -52,9 +51,7 @@ fun AlbumDetailsData.toSummary() = AlbumDetailsSummary(
         R.string.album_artist_year,
         this.artistName,
         this.releaseYear
-    ),
-    trackNumbersTotalDuration = QuantityStringPresenter(R.plurals.albums_tracks_duration,
-        this.trackNumber, this.trackNumber)
+    )
 )
 
 fun AlbumModel.toAlbumDetailData(): AlbumDetailsData = AlbumDetailsData(

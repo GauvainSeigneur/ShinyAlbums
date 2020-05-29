@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">ShinyAlbums</string>
 
+    <string name="transition_root" translatable="false">transition_root</string>
+    <string name="transition_country_flag" translatable="false">transition_country_flag</string>
+    <string name="transition_cover_image" translatable="false">transition_cover_image</string>
+
     <string name="error_fetch_data_title">Oops&#8230; Data not found</string>
     <string name="error_fetch_data_description">Please check your internet connection and retry.</string>
     <string name="retry">retry</string>

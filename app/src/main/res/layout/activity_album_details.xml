@@ -64,7 +64,6 @@
 
             <TextView
                 android:id="@+id/trackNumberDurationTextView"
-                android:visibility="gone"
                 android:padding="@dimen/space_m"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -72,8 +71,6 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
     <!--
         As we can't use windowSharedElementsUseOverlay=true for activity theme because of the

@@ -96,7 +96,8 @@ class UserAlbumsActivity : AppCompatActivity(),
                     initialLoadingView.setError(
                         it.errorData.title?.getFormattedString(this),
                         it.errorData.description?.getFormattedString(this),
-                        it.errorData.buttonText?.getFormattedString(this)
+                        it.errorData.buttonText?.getFormattedString(this),
+                        it.errorData.iconRes
                     ) { viewModel.retry() }
                 }
             }
