@@ -1,11 +1,13 @@
 # Shiny Albums
 A mobile application which uses Deezer api to display a list of albums and details page.
 
-<img src="art/albums.jpg" width="18%"></img>
-<img src="art/details.jpg" width="18%"></img>
-<img src="art/details_not_available.jpg" width="18%"></img>
-<img src="art/custom_loader.gif" width="18%"></img>
-<img src="art/no_data_error.gif" width="18%"></img>
+<img src="art/albums.jpg" width="13%"></img>
+<img src="art/details.jpg" width="13%"></img>
+<img src="art/details_not_available.jpg" width="13%"></img>
+<img src="art/custom_loader.gif" width="13%"></img>
+<img src="art/no_data_error.gif" width="13%"></img>
+<img src="art/footer_loader.giff" width="13%"></img>
+<img src="art/footer_error.jpg" width="13%"></img>
 
 ## Technologies & pattern
 * Kotlin
