@@ -56,7 +56,7 @@ class AlbumDetailsViewModel(
         data.value = LiveDataState.Error(ErrorData(ErrorDataType.NOT_RECOVERABLE))
     }
 
-    fun getAlbumTracks() {
+    fun fetchAlbumTracks() {
         detailsData?.let {
             if (it.available) {
                 fetchAlbumTracks(it.albumTrackListId)

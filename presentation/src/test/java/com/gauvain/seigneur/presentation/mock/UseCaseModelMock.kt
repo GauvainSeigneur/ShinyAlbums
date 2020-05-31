@@ -6,11 +6,21 @@ import com.gauvain.seigneur.domain.utils.toDate
 
 object UseCaseModelMock {
 
+    fun createSuccessTracksOutCome() =  Outcome.Success(
+        TrackListModel(
+            tracks = listOf(
+                TrackModel(0L, true, "trackTitle", 20L, 1, "artistName", false)
+            ),
+            total = 1
+        )
+    )
+
     fun createSuccessPaginedAlbumUseCaseOutCome() = Outcome.Success(
         AlbumPaginedModel(
             albums = listOf(
                 AlbumModel(
                     id = 49201,
+                    trackListId = 49201,
                     title = "Groove Sessions",
                     link = "http://www.deezer.com/album/49201",
                     cover = "http://api.deezer.com/2.0/album/49201/image",

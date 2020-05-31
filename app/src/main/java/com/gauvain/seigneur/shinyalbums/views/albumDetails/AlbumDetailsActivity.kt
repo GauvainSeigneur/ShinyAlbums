@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.DataSource
@@ -93,7 +92,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                     detailsCoverCardView.alpha = 1f
                 }
                 SharedTransitionState.ENDED -> {
-                    viewModel.getAlbumTracks()
+                    viewModel.fetchAlbumTracks()
                     recolorBackground()
                 }
             }
@@ -135,7 +134,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                         it.errorData.description?.getFormattedString(this),
                         it.errorData.buttonText?.getFormattedString(this),
                         it.errorData.iconRes
-                    ) { viewModel.getAlbumTracks() }
+                    ) { viewModel.fetchAlbumTracks() }
                 }
             }
         })

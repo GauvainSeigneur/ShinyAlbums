@@ -24,23 +24,15 @@ data class TrackItemData(
     val id: Long,
     val title: String,
     val artistName: String,
-    val isExplicitLyrics: Boolean,
-    val duration: String
+    val isExplicitLyrics: Boolean
 )
 
 fun TrackModel.toData(): TrackItemData = TrackItemData(
     id = this.id,
     title = this.title,
     artistName = this.artist,
-    isExplicitLyrics = this.isExplicitLyrics,
-    duration = convertLongToDurationString(this.duration)
+    isExplicitLyrics = this.isExplicitLyrics
 )
 
-private fun convertLongToDurationString(duration: Long):String =
-   String.format(
-      "%02d min, %02d sec",
-      TimeUnit.MILLISECONDS.toMinutes(duration), TimeUnit.MILLISECONDS.toSeconds(duration) -
-          TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
-   )
 
 
