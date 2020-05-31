@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="ShinyAlbumsTheme" parent="Theme.MaterialComponents.NoActionBar">
-        <!-- Original AppCompat attributes. -->
+        <!-- Original AppCompat color attributes. -->
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryVariant</item>
@@ -10,21 +10,19 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorError">@color/colorError</item>
         <item name="android:colorError" tools:targetApi="26">@color/colorError</item>
-        <!--<item name="android:textColor"></item> -->
         <item name="android:statusBarColor" tools:targetApi="21">@color/colorBackground</item>
         <item name="android:colorEdgeEffect" tools:targetApi="21">@color/colorEdge</item>
-        <!-- New MaterialComponents attributes. -->
+        <!-- New MaterialComponents color attributes. -->
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
-        <!-- color for tab, toolbar, bototm navgation, snackbar -->
+        <!-- color for tab, toolbar, bottom navigation, snackbar -->
         <item name="colorSurface">@color/colorSurface</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="colorOnError">@color/colorOnError</item>
-
+        <!-- widgets style -->
         <item name="materialButtonStyle">@style/Widget.Button</item>
-
         <!--Typography -->
         <item name="textAppearanceHeadline1">@style/Typography.TextAppearance.Headline1</item>
         <item name="textAppearanceHeadline2">@style/Typography.TextAppearance.Headline2</item>

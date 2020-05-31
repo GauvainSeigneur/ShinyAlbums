@@ -30,6 +30,7 @@ class FooterViewHolder(
                         loadingView.visibility = View.GONE
                         errorView.visibility = View.INVISIBLE
                     }
+
                     NextRequestStatus.FAILED -> {
                         startLoadingAnimation(loadingView, false)
                         loadingView.visibility = View.GONE

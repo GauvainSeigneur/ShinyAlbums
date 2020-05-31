@@ -1,11 +1,13 @@
 # Shiny Albums
 A mobile application which uses Deezer api to display a list of albums and details page.
 
-<img src="art/albums.jpg" width="18%"></img>
-<img src="art/details.jpg" width="18%"></img>
-<img src="art/details_not_available.jpg" width="18%"></img>
-<img src="art/custom_loader.gif" width="18%"></img>
-<img src="art/no_data_error.gif" width="18%"></img>
+<img src="art/albums.jpg" width="13%"></img>
+<img src="art/details.jpg" width="13%"></img>
+<img src="art/details_not_available.jpg" width="13%"></img>
+<img src="art/custom_loader.gif" width="13%"></img>
+<img src="art/no_data_error.gif" width="13%"></img>
+<img src="art/footer_loader.giff" width="13%"></img>
+<img src="art/footer_error.jpg" width="13%"></img>
 
 ## Technologies & pattern
 * Kotlin
@@ -42,9 +44,7 @@ This module includes Activity, fragment or UI related widgets. It observes data 
 layer and can call function of ViewModel.
 
 ## State
-I have implemented the online mode and add some tests on adapter and useCase. But I didn't have
-enough time to implement offline mode, have a better covergae of my existing tests and add some
-for the viewModel.
+WIP
 
 ## Licence
 ```

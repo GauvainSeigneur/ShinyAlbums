@@ -2,7 +2,6 @@ package com.gauvain.seigneur.shinyalbums.views.albumDetails
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -12,8 +11,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
-import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -26,7 +25,8 @@ import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.model.SharedTransitionState
 import com.gauvain.seigneur.shinyalbums.R
 import com.gauvain.seigneur.shinyalbums.animation.TransitionListenerAdapter
-import com.gauvain.seigneur.shinyalbums.utils.ImageUtils
+import com.gauvain.seigneur.shinyalbums.utils.MyColorUtils
+import com.gauvain.seigneur.shinyalbums.utils.getDominantSwatch
 import com.gauvain.seigneur.shinyalbums.utils.loadCover
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_album_details.*
@@ -38,6 +38,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
 
     companion object {
         private const val FADE_MAX_VALUE = 1f
+        private const val DARKEN_RATIO = 0.15f
         private const val DETAILS_DATA = "details_data"
         fun newIntent(
             context: Context,
@@ -54,16 +55,15 @@ class AlbumDetailsActivity : AppCompatActivity() {
         AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val vTotalScrollRange = appBarLayout.totalScrollRange
             val vRatio = (vTotalScrollRange.toFloat() + verticalOffset) / vTotalScrollRange
-            detailsHeaderContentView.alpha = (vRatio * FADE_MAX_VALUE)
-            //*0.75 because we set the layout_collapseParallaxMultiplier to 0.25 for detailsHeaderContentView
-            detailsCoverCardView.y = collapsingCoverPlaceHolder.y + (verticalOffset * 0.75f)
+            albumDetailsSummaryView.handleAlbumInfoVisibility(vRatio,  FADE_MAX_VALUE)
+            detailsCoverCardView.y = collapsingCoverPlaceHolder.y + (verticalOffset * 0.5f)
+            //*0.5 because we set the layout_collapseParallaxMultiplier to 0.5 for albumDetailsSummaryView
             detailsCoverCardView.alpha = (vRatio * FADE_MAX_VALUE)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         data = intent.getParcelableExtra(DETAILS_DATA)
-        viewModel.getSummaryInfo()
         setContentView(R.layout.activity_album_details)
         handleTransition()
         initViews()
@@ -71,7 +71,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        viewModel.sharedTransitionData.value = SharedTransitionState.STARTED
+        viewModel.setSharedTransitionStarted()
         super.onBackPressed()
     }
 
@@ -85,7 +85,21 @@ class AlbumDetailsActivity : AppCompatActivity() {
     }
 
     private fun observe() {
-        viewModel.summaryData.observe(this, Observer {
+        viewModel.getSharedTransitionData().observe(this, Observer {
+            when (it) {
+                SharedTransitionState.STARTED -> {
+                    playFab.hide()
+                    playFab.visibility = View.INVISIBLE
+                    detailsCoverCardView.alpha = 1f
+                }
+                SharedTransitionState.ENDED -> {
+                    viewModel.getAlbumTracks()
+                    recolorBackground()
+                }
+            }
+        })
+
+        viewModel.getSummaryData().observe(this, Observer {
             when (it) {
                 is LiveDataState.Success -> {
                     loadCover(it.data.cover)
@@ -106,22 +120,11 @@ class AlbumDetailsActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.sharedTransitionData.observe(this, Observer {
-            when (it) {
-                SharedTransitionState.STARTED -> {
-                    detailsCoverCardView.alpha = 1f
-                }
-                SharedTransitionState.ENDED -> {
-                    viewModel.getAlbumTracks()
-                    recolorBackground()
-                }
-            }
-        })
-
-        viewModel.tracksData.observe(this, Observer {
+        viewModel.getTracksData().observe(this, Observer {
             when (it) {
                 is LiveDataState.Success -> {
                     initialLoadingView.visibility = View.GONE
+                    playFab.show()
                     trackListAdapter.submitList(it.data.tracks)
                     trackNumberDurationTextView.text = it.data.total.getFormattedString(this)
                 }
@@ -137,7 +140,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.trackLoadingState.observe(this, Observer {
+        viewModel.getLoadingState().observe(this, Observer {
             when (it) {
                 LoadingState.IS_LOADING -> {
                     initialLoadingView.visibility = View.VISIBLE
@@ -154,7 +157,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             listenSharedEnterTransition()
         } else {
-            recolorBackground()
+            viewModel.setSharedTransitionEnded()
         }
     }
 
@@ -167,9 +170,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
-                resource?.let {
-                    adaptColorFromCover(ImageUtils.drawableToBitmap(it))
-                }
+                adaptColorFromCover(resource)
                 return false
             }
 
@@ -179,19 +180,9 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 target: Target<Drawable>?,
                 isFirstResource: Boolean
             ): Boolean {
-                adaptColorFromCover(ImageUtils.drawableToBitmap(detailsCoverImageView.drawable))
                 return false
             }
         })
-    }
-
-    private fun adaptColorFromCover(bitmap: Bitmap) {
-        val p = Palette.from(bitmap).generate()
-        val dominantSwatch = p.dominantSwatch
-        // finally change the color
-        if (dominantSwatch != null) {
-            gradientBackground.setBackgroundColor(dominantSwatch.rgb)
-        }
     }
 
     @RequiresApi(21)
@@ -200,14 +191,29 @@ class AlbumDetailsActivity : AppCompatActivity() {
         sharedElementEnterTransition.addListener(object : TransitionListenerAdapter() {
             override fun onTransitionStart(transition: Transition) {
                 super.onTransitionStart(transition)
-                viewModel.sharedTransitionData.value = SharedTransitionState.STARTED
+                viewModel.setSharedTransitionStarted()
             }
 
             override fun onTransitionEnd(transition: Transition) {
                 super.onTransitionEnd(transition)
-                viewModel.sharedTransitionData.value = SharedTransitionState.ENDED
+                viewModel.setSharedTransitionEnded()
             }
         })
+    }
+
+    private fun adaptColorFromCover(drawable: Drawable?) {
+        drawable?.let {
+            it.getDominantSwatch()?.rgb?.let {rgb ->
+                gradientBackground.setBackgroundColor(rgb)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    //make this color a little darker than the background
+                    window.statusBarColor = MyColorUtils.darkenColor(this@AlbumDetailsActivity,
+                        rgb, DARKEN_RATIO)
+                }
+
+            }
+        }
+
     }
 
     private fun recolorBackground() {

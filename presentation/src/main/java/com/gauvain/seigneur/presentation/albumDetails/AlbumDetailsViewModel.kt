@@ -25,19 +25,35 @@ class AlbumDetailsViewModel(
         job.cancel()
     }
 
-    val trackLoadingState = MutableLiveData<LoadingState>()
-    val tracksData = MutableLiveData<TracksState>()
-    val summaryData = MutableLiveData<SummaryState>()
-    val sharedTransitionData = MutableLiveData<SharedTransitionState>()
-
-    fun getSummaryInfo() {
-        detailsData?.let {
-            summaryData.value = LiveDataState.Success(it.toSummary())
-        } ?: setNoDataError()
+    private val sharedTransitionData = MutableLiveData<SharedTransitionState>()
+    private val trackLoadingState = MutableLiveData<LoadingState>()
+    private val tracksData = MutableLiveData<TracksState>()
+    private val summaryData: MutableLiveData<SummaryState> by lazy {
+        MutableLiveData<SummaryState>().also { livedata ->
+            getSummaryInfo(livedata)
+        }
     }
 
-    private fun setNoDataError() {
-        summaryData.value = LiveDataState.Error(ErrorData(ErrorDataType.NOT_RECOVERABLE))
+    fun getSummaryData(): LiveData<SummaryState> = summaryData
+    fun getLoadingState(): LiveData<LoadingState> = trackLoadingState
+    fun getTracksData(): LiveData<TracksState> = tracksData
+    fun getSharedTransitionData(): LiveData<SharedTransitionState> = sharedTransitionData
+    fun setSharedTransitionStarted() {
+        sharedTransitionData.value = SharedTransitionState.STARTED
+    }
+
+    fun setSharedTransitionEnded() {
+        sharedTransitionData.value = SharedTransitionState.ENDED
+    }
+
+    private fun getSummaryInfo(data: MutableLiveData<SummaryState>) {
+        detailsData?.let {
+            data.value = LiveDataState.Success(it.toSummary())
+        } ?: setNoDataError(data)
+    }
+
+    private fun setNoDataError(data: MutableLiveData<SummaryState>) {
+        data.value = LiveDataState.Error(ErrorData(ErrorDataType.NOT_RECOVERABLE))
     }
 
     fun getAlbumTracks() {

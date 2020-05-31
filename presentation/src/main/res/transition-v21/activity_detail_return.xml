@@ -10,6 +10,8 @@
         <targets>
             <target android:excludeId="@android:id/navigationBarBackground" />
             <target android:excludeId="@android:id/statusBarBackground" />
+            <target android:excludeId="@id/albumDetailsSummaryView"/>
+            <target android:excludeId="@id/playFab"/>
             <target android:excludeId="@id/detailsCoverCardView" />
             <target android:excludeId="@id/detailsCoverImageView" />
         </targets>
@@ -19,8 +21,6 @@
     <fade android:duration="@integer/animation_alpha_duration_return">
         <targets>
             <target android:excludeId="@id/activityDetailsBackground" />
-            <!--<target android:targetId="@id/detailsNestedScrollView" />
-            <target android:targetId="@id/detailsNestedLayout" />-->
         </targets>
     </fade>
 

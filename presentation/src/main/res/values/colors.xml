@@ -23,6 +23,7 @@
     <color name="colorOnSecondary">@color/colorWhite</color>
     <color name="colorEdge">@color/colorBlackLight</color>
     <color name="colorBackground">@color/colorBlack</color>
+    <color name="colorDetailsStatusBar">#80080708</color>
     <color name="colorOnBackground">@color/colorWhiteDark</color>
 
     <!-- color for toolbar, cardview, etc. -->
