@@ -3,6 +3,7 @@ package com.gauvain.seigneur.shinyalbums.views.albumDetails
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +40,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
 
     companion object {
         private const val FADE_MAX_VALUE = 1f
+        private const val DARKEN_RATIO = 0.25f
         private const val DETAILS_DATA = "details_data"
         fun newIntent(
             context: Context,
@@ -54,9 +57,9 @@ class AlbumDetailsActivity : AppCompatActivity() {
         AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val vTotalScrollRange = appBarLayout.totalScrollRange
             val vRatio = (vTotalScrollRange.toFloat() + verticalOffset) / vTotalScrollRange
-            detailsHeaderContentView.alpha = (vRatio * FADE_MAX_VALUE)
-            //*0.75 because we set the layout_collapseParallaxMultiplier to 0.25 for detailsHeaderContentView
-            detailsCoverCardView.y = collapsingCoverPlaceHolder.y + (verticalOffset * 0.75f)
+            albumDetailsSummaryView.handleAlbumInfoVisibility(vRatio,  FADE_MAX_VALUE)
+            detailsCoverCardView.y = collapsingCoverPlaceHolder.y + (verticalOffset * 0.5f)
+            //*0.5 because we set the layout_collapseParallaxMultiplier to 0.5 for albumDetailsSummaryView
             detailsCoverCardView.alpha = (vRatio * FADE_MAX_VALUE)
         }
 
@@ -109,6 +112,8 @@ class AlbumDetailsActivity : AppCompatActivity() {
         viewModel.sharedTransitionData.observe(this, Observer {
             when (it) {
                 SharedTransitionState.STARTED -> {
+                    playFab.hide()
+                    playFab.visibility = View.INVISIBLE
                     detailsCoverCardView.alpha = 1f
                 }
                 SharedTransitionState.ENDED -> {
@@ -122,6 +127,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
             when (it) {
                 is LiveDataState.Success -> {
                     initialLoadingView.visibility = View.GONE
+                    playFab.show()
                     trackListAdapter.submitList(it.data.tracks)
                     trackNumberDurationTextView.text = it.data.total.getFormattedString(this)
                 }
@@ -154,8 +160,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             listenSharedEnterTransition()
         } else {
-            viewModel.getAlbumTracks()
-            recolorBackground()
+            viewModel.sharedTransitionData.value = SharedTransitionState.ENDED
         }
     }
 
@@ -186,15 +191,6 @@ class AlbumDetailsActivity : AppCompatActivity() {
         })
     }
 
-    private fun adaptColorFromCover(bitmap: Bitmap) {
-        val p = Palette.from(bitmap).generate()
-        val dominantSwatch = p.dominantSwatch
-        // finally change the color
-        if (dominantSwatch != null) {
-            gradientBackground.setBackgroundColor(dominantSwatch.rgb)
-        }
-    }
-
     @RequiresApi(21)
     private fun listenSharedEnterTransition() {
         val sharedElementEnterTransition: Transition = window.sharedElementEnterTransition
@@ -209,6 +205,20 @@ class AlbumDetailsActivity : AppCompatActivity() {
                 viewModel.sharedTransitionData.value = SharedTransitionState.ENDED
             }
         })
+    }
+
+    private fun adaptColorFromCover(bitmap: Bitmap) {
+        val p = Palette.from(bitmap).generate()
+        val dominantSwatch = p.dominantSwatch
+        // finally change the color
+        dominantSwatch?.let {
+            gradientBackground.setBackgroundColor(it.rgb)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                //make this color a little darker than the background
+                window.statusBarColor = ColorUtils.blendARGB(it.rgb, Color.BLACK, DARKEN_RATIO)
+            }
+
+        }
     }
 
     private fun recolorBackground() {

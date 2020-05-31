@@ -10,8 +10,6 @@
 
     <!-- Theme for ActivityDetail (applying some transition) -->
     <style name="ShinyAlbumsTheme.Transparent.AlbumDetails">
-        <item name="android:statusBarColor">@color/colorDetailsStatusBar</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition">@transition/activity_detail_s_e_enter</item>
