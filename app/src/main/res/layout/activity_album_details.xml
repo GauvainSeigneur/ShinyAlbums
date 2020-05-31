@@ -5,33 +5,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".views.albumDetails.AlbumDetailsActivity">
 
     <!-- Use a separate view for the background, rather than on the root view because it is a
         shared element. Otherwise it interferes with the window enter transition i.e. as it is
         resized for the shared element transition, many views are considered 'off-screen' so
-        visibility transitions are not run. -->
+        visibility transitions are not run.
+      -->
     <View
         android:id="@+id/activityDetailsBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="@string/transition_root"
         android:background="@drawable/shared_details_background"
-        android:importantForAccessibility="no"
-        android:transitionName="@string/transition_root" />
+        android:importantForAccessibility="no"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorBackground">
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:contentScrim="@android:color/transparent"
             app:expandedTitleTextAppearance="@style/Widget.InvisibleExpandedTitle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
             app:titleEnabled="true">
+
+            <include layout="@layout/view_album_summary"/>
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -39,8 +45,6 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_arrow_back_white_24dp"/>
-
-            <include layout="@layout/view_album_summary"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
