@@ -44,7 +44,7 @@ This module includes Activity, fragment or UI related widgets. It observes data 
 layer and can call function of ViewModel.
 
 ## State
-WIP
+Done
 
 ## Licence
 ```
