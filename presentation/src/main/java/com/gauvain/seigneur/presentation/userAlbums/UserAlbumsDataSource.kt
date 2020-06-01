@@ -12,17 +12,14 @@ import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.utils.StringPresenter
 import kotlinx.coroutines.*
-import java.util.concurrent.Executor
 
 class UserAlbumsDataSource(
     private val userName: String,
-    private val scope: CoroutineScope,
-    private val useCase: GetUserAlbumsUseCase
+    private val useCase: GetUserAlbumsUseCase,
+    val scope: CoroutineScope
 ) : PageKeyedDataSource<Int, AlbumModel>() {
 
-    // keep a function reference for the retry event
     private var retry: (() -> Any)? = null
-
     private var isLastPage = false
     val initialLoadingState = MutableLiveData<LiveDataState<LoadingState>>()
     val nextLoadingState = MutableLiveData<LiveDataState<LoadingState>>()
@@ -37,14 +34,14 @@ class UserAlbumsDataSource(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, AlbumModel>
     ) {
-        scope.launch(Dispatchers.Main) {
-            val result = withContext(Dispatchers.IO) {
-                useCase.invoke(userName, 0)
-            }
-            initialLoadingState.value = LiveDataState.Success(LoadingState.IS_LOADING)
+        scope.launch(Dispatchers.IO) {
+            initialLoadingState.postValue(LiveDataState.Success(LoadingState.IS_LOADING))
+            val result = useCase.invoke(userName, 0)
             when (result) {
                 is Outcome.Success -> {
-                    initialLoadingState.value = LiveDataState.Success(LoadingState.IS_LOADED)
+                    // clear retry since last request succeeded
+                    retry = null
+                    initialLoadingState.postValue(LiveDataState.Success(LoadingState.IS_LOADED))
                     isLastPage = result.data.next == null
                     callback.onResult(result.data.albums, null, result.data.next)
                 }
@@ -52,12 +49,14 @@ class UserAlbumsDataSource(
                     retry = {
                         loadInitial(params, callback)
                     }
-                    initialLoadingState.value = LiveDataState.Error(
-                        ErrorData(
-                            ErrorDataType.RECOVERABLE,
-                            StringPresenter(R.string.error_fetch_data_title),
-                            StringPresenter(R.string.error_fetch_data_description),
-                            StringPresenter(R.string.retry)
+                    initialLoadingState.postValue(
+                        LiveDataState.Error(
+                            ErrorData(
+                                ErrorDataType.RECOVERABLE,
+                                StringPresenter(R.string.error_fetch_data_title),
+                                StringPresenter(R.string.error_fetch_data_description),
+                                StringPresenter(R.string.retry)
+                            )
                         )
                     )
                 }
@@ -66,15 +65,16 @@ class UserAlbumsDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, AlbumModel>) {
-        if (!isLastPage) {
-            scope.launch(Dispatchers.Main) {
-                nextLoadingState.value = LiveDataState.Success(LoadingState.IS_LOADING)
-                val result = withContext(Dispatchers.IO) {
+        scope.launch(Dispatchers.IO) {
+            if (!isLastPage) {
+                nextLoadingState.postValue(LiveDataState.Success(LoadingState.IS_LOADING))
+                val result =
                     useCase.invoke(userName, params.key)
-                }
-                nextLoadingState.value = LiveDataState.Success(LoadingState.IS_LOADED)
+                nextLoadingState.postValue(LiveDataState.Success(LoadingState.IS_LOADED))
                 when (result) {
                     is Outcome.Success -> {
+                        // clear retry since last request succeeded
+                        retry = null
                         isLastPage = result.data.next == null
                         callback.onResult(result.data.albums, result.data.next)
                     }
@@ -82,12 +82,14 @@ class UserAlbumsDataSource(
                         retry = {
                             loadAfter(params, callback)
                         }
-                        nextLoadingState.value = LiveDataState.Error(
-                            ErrorData(
-                                ErrorDataType.RECOVERABLE,
-                                StringPresenter(R.string.error_fetch_data_title),
-                                StringPresenter(R.string.error_fetch_data_description),
-                                StringPresenter(R.string.retry)
+                        nextLoadingState.postValue(
+                            LiveDataState.Error(
+                                ErrorData(
+                                    ErrorDataType.RECOVERABLE,
+                                    StringPresenter(R.string.error_fetch_data_title),
+                                    StringPresenter(R.string.error_fetch_data_description),
+                                    StringPresenter(R.string.retry)
+                                )
                             )
                         )
                     }

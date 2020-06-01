@@ -2,10 +2,7 @@ package com.gauvain.seigneur.domain
 
 import com.gauvain.seigneur.domain.mock.OutComeModelMock
 import com.gauvain.seigneur.domain.mock.ProviderModelMock
-import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
-import com.gauvain.seigneur.domain.model.RequestExceptionType
-import com.gauvain.seigneur.domain.provider.GetAlbumTracksException
 import com.gauvain.seigneur.domain.provider.GetAlbumTracksProvider
 import com.gauvain.seigneur.domain.useCase.GetAlbumTracksUseCase
 import com.google.common.truth.Truth.assertThat

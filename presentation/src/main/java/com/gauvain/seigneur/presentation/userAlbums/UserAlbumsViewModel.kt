@@ -7,16 +7,13 @@ import androidx.paging.PagedList
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.utils.event.Event
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
 
 typealias displaysDetailsEventState = Event<LiveDataState<TransitionAlbumItemData>>
 
 class UserAlbumsViewModel(
     private val useCase: GetUserAlbumsUseCase
-) : ViewModel(), CoroutineScope {
+) : ViewModel() {
 
-    private val job = Job()
     private val albumDetailsList = mutableListOf<AlbumDetailsData>()
     val displaysDetailsEvent = MutableLiveData<displaysDetailsEventState>()
     private val config = PagedList.Config.Builder()
@@ -29,8 +26,8 @@ class UserAlbumsViewModel(
     private val dataSourceFactory: UserAlbumsDataSourceFactory by lazy {
         UserAlbumsDataSourceFactory(
             "2529",
-            viewModelScope,
-            useCase
+            useCase,
+            viewModelScope
         )
     }
     val albumList: LiveData<PagedList<AlbumItemData>> by lazy {
@@ -41,12 +38,6 @@ class UserAlbumsViewModel(
             albumDetailsList.add(albumModel.toAlbumDetailData())
             albumModel.toItemData()
         }, config).build()
-    }
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
-
-    override fun onCleared() {
-        job.cancel()
     }
 
     fun retry() {
@@ -60,7 +51,14 @@ class UserAlbumsViewModel(
             val item = albumDetailsList.firstOrNull { it.id == idValue }
             item?.let {
                 displaysDetailsEvent.value = Event(
-                    LiveDataState.Success(TransitionAlbumItemData(it, rootView, cardView, imageView))
+                    LiveDataState.Success(
+                        TransitionAlbumItemData(
+                            it,
+                            rootView,
+                            cardView,
+                            imageView
+                        )
+                    )
                 )
             }
         }

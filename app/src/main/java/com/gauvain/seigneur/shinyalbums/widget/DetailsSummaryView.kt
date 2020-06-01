@@ -17,7 +17,7 @@ class DetailsSummaryView @JvmOverloads constructor(
         inflater.inflate(R.layout.view_album_summary, this)
     }
 
-    fun handleAlbumInfoVisibility(ratio:Float, maxAlpha:Float) {
+    fun handleAlbumInfoVisibility(ratio: Float, maxAlpha: Float) {
         collapsingCoverPlaceHolder.alpha = (ratio * maxAlpha)
         albumTitleTextView.alpha = (ratio * maxAlpha)
         albumArtistYearTextView.alpha = (ratio * maxAlpha)

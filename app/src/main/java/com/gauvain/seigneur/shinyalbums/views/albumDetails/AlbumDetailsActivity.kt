@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.DataSource
@@ -55,7 +54,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
         AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val vTotalScrollRange = appBarLayout.totalScrollRange
             val vRatio = (vTotalScrollRange.toFloat() + verticalOffset) / vTotalScrollRange
-            albumDetailsSummaryView.handleAlbumInfoVisibility(vRatio,  FADE_MAX_VALUE)
+            albumDetailsSummaryView.handleAlbumInfoVisibility(vRatio, FADE_MAX_VALUE)
             detailsCoverCardView.y = collapsingCoverPlaceHolder.y + (verticalOffset * 0.5f)
             //*0.5 because we set the layout_collapseParallaxMultiplier to 0.5 for albumDetailsSummaryView
             detailsCoverCardView.alpha = (vRatio * FADE_MAX_VALUE)
@@ -93,7 +92,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                     detailsCoverCardView.alpha = 1f
                 }
                 SharedTransitionState.ENDED -> {
-                    viewModel.getAlbumTracks()
+                    viewModel.fetchAlbumTracks()
                     recolorBackground()
                 }
             }
@@ -135,7 +134,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
                         it.errorData.description?.getFormattedString(this),
                         it.errorData.buttonText?.getFormattedString(this),
                         it.errorData.iconRes
-                    ) { viewModel.getAlbumTracks() }
+                    ) { viewModel.fetchAlbumTracks() }
                 }
             }
         })
@@ -203,17 +202,17 @@ class AlbumDetailsActivity : AppCompatActivity() {
 
     private fun adaptColorFromCover(drawable: Drawable?) {
         drawable?.let {
-            it.getDominantSwatch()?.rgb?.let {rgb ->
+            it.getDominantSwatch()?.rgb?.let { rgb ->
                 gradientBackground.setBackgroundColor(rgb)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     //make this color a little darker than the background
-                    window.statusBarColor = MyColorUtils.darkenColor(this@AlbumDetailsActivity,
-                        rgb, DARKEN_RATIO)
+                    window.statusBarColor = MyColorUtils.darkenColor(
+                        this@AlbumDetailsActivity,
+                        rgb, DARKEN_RATIO
+                    )
                 }
-
             }
         }
-
     }
 
     private fun recolorBackground() {

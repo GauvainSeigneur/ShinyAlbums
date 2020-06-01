@@ -13,16 +13,16 @@
         android:theme="@style/ShinyAlbumsTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".views.splash.SplashActivity"
-            android:theme="@style/ShinyAlbumsTheme.SlpashActivityTheme"/>
+            android:theme="@style/ShinyAlbumsTheme.SlpashActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".views.albumDetails.AlbumDetailsActivity"
             android:theme="@style/ShinyAlbumsTheme.Transparent.AlbumDetails"/>
         <activity android:name=".views.userAlbums.UserAlbumsActivity"
             android:theme="@style/ShinyAlbumsTheme.UserAlbums">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
