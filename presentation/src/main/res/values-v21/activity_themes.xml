@@ -4,9 +4,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-
-    <style name="ShinyAlbumsTheme.SlpashActivityTheme">
-    </style>
+    
 
     <!-- Theme for ActivityDetail (applying some transition) -->
     <style name="ShinyAlbumsTheme.Transparent.AlbumDetails">

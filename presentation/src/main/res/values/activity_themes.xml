@@ -6,6 +6,7 @@
     </style>
 
     <style name="ShinyAlbumsTheme.SlpashActivityTheme">
+        <item name="android:windowBackground">@drawable/background_splash_screen</item>
     </style>
 
     <!-- Theme for ActivityDetail (applying some transition) -->
