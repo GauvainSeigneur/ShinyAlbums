@@ -10,7 +10,7 @@ val viewModelModule = module {
     viewModel {
         UserAlbumsViewModel(get())
     }
-    viewModel {(detailsData: AlbumDetailsData) ->
+    viewModel { (detailsData: AlbumDetailsData) ->
         AlbumDetailsViewModel(detailsData, get())
     }
 }

@@ -4,13 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.gauvain.seigneur.domain.model.AlbumModel
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
-import com.gauvain.seigneur.presentation.userAlbums.UserAlbumsDataSource
 import kotlinx.coroutines.CoroutineScope
 
 class UserAlbumsDataSourceFactory(
-    val userName:String,
-    val scope: CoroutineScope,
-    val useCase: GetUserAlbumsUseCase
+    val userName: String,
+    val useCase: GetUserAlbumsUseCase,
+    val scope: CoroutineScope
 ) : DataSource.Factory<Int, AlbumModel>() {
 
     val albumsDataSourceLiveData = MutableLiveData<UserAlbumsDataSource>()
@@ -18,8 +17,8 @@ class UserAlbumsDataSourceFactory(
     override fun create(): DataSource<Int, AlbumModel> {
         val dataSource = UserAlbumsDataSource(
             userName,
-            scope,
-            useCase
+            useCase,
+            scope
         )
         albumsDataSourceLiveData.postValue(dataSource)
         return dataSource

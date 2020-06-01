@@ -1,12 +1,10 @@
 package com.gauvain.seigneur.presentation.model
 
-
 class NextRequestState {
 
     var nextRequestStatus: NextRequestStatus? = null
         private set
-
-    var message: String =""
+    var message: String = ""
 
     private constructor(nextRequestStatus: NextRequestStatus, message: String) {
         this.nextRequestStatus = nextRequestStatus
@@ -24,5 +22,4 @@ class NextRequestState {
             return NextRequestState(NextRequestStatus.FAILED, message ?: "unknown error")
         }
     }
-
 }

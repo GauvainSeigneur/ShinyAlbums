@@ -69,9 +69,13 @@ class AlbumDetailsViewModelTest {
         val value = viewModel.getSummaryData().getOrAwaitValue()
         assertEquals(
             value, LiveDataState.Success(
-                AlbumDetailsSummary("coverUrl", "title", StringPresenter(   R.string.album_artist_year,
-                    "artist",
-                    "2020"))
+                AlbumDetailsSummary(
+                    "coverUrl", "title", StringPresenter(
+                        R.string.album_artist_year,
+                        "artist",
+                        "2020"
+                    )
+                )
             )
         )
     }
@@ -137,9 +141,8 @@ class AlbumDetailsViewModelTest {
             assertEquals(
                 value, LiveDataState.Success(
                     TrackData(
-                        tracks = listOf(TrackItemData(0L, "trackTitle",  "artistName", false)),
+                        tracks = listOf(TrackItemData(0L, "trackTitle", "artistName", false)),
                         total = QuantityStringPresenter(R.plurals.albums_tracks_duration, 1, 1)
-
                     )
                 )
             )

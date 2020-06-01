@@ -54,7 +54,7 @@ class AlbumDetailsActivity : AppCompatActivity() {
         AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val vTotalScrollRange = appBarLayout.totalScrollRange
             val vRatio = (vTotalScrollRange.toFloat() + verticalOffset) / vTotalScrollRange
-            albumDetailsSummaryView.handleAlbumInfoVisibility(vRatio,  FADE_MAX_VALUE)
+            albumDetailsSummaryView.handleAlbumInfoVisibility(vRatio, FADE_MAX_VALUE)
             detailsCoverCardView.y = collapsingCoverPlaceHolder.y + (verticalOffset * 0.5f)
             //*0.5 because we set the layout_collapseParallaxMultiplier to 0.5 for albumDetailsSummaryView
             detailsCoverCardView.alpha = (vRatio * FADE_MAX_VALUE)
@@ -202,17 +202,17 @@ class AlbumDetailsActivity : AppCompatActivity() {
 
     private fun adaptColorFromCover(drawable: Drawable?) {
         drawable?.let {
-            it.getDominantSwatch()?.rgb?.let {rgb ->
+            it.getDominantSwatch()?.rgb?.let { rgb ->
                 gradientBackground.setBackgroundColor(rgb)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     //make this color a little darker than the background
-                    window.statusBarColor = MyColorUtils.darkenColor(this@AlbumDetailsActivity,
-                        rgb, DARKEN_RATIO)
+                    window.statusBarColor = MyColorUtils.darkenColor(
+                        this@AlbumDetailsActivity,
+                        rgb, DARKEN_RATIO
+                    )
                 }
-
             }
         }
-
     }
 
     private fun recolorBackground() {
