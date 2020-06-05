@@ -7,6 +7,8 @@ import androidx.paging.PagedList
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.utils.event.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 typealias displaysDetailsEventState = Event<LiveDataState<TransitionAlbumItemData>>
 
@@ -26,8 +28,7 @@ class UserAlbumsViewModel(
     private val dataSourceFactory: UserAlbumsDataSourceFactory by lazy {
         UserAlbumsDataSourceFactory(
             "2529",
-            useCase,
-            viewModelScope
+            useCase
         )
     }
     val albumList: LiveData<PagedList<AlbumItemData>> by lazy {
@@ -41,7 +42,10 @@ class UserAlbumsViewModel(
     }
 
     fun retry() {
-        dataSourceFactory.albumsDataSourceLiveData.value?.retryAllFailed()
+        //as dataSource is in background, viewModel must call this method from background too
+        viewModelScope.launch(Dispatchers.IO) {
+            dataSourceFactory.albumsDataSourceLiveData.value?.retryAllFailed()
+        }
     }
 
     fun getAlbumDetail(
