@@ -15,15 +15,7 @@ typealias TracksState = LiveDataState<TrackData>
 class AlbumDetailsViewModel(
     private val detailsData: AlbumDetailsData?,
     private val useCase: GetAlbumTracksUseCase
-) : ViewModel(), CoroutineScope {
-
-    private val job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
-
-    override fun onCleared() {
-        job.cancel()
-    }
+) : ViewModel() {
 
     private val sharedTransitionData = MutableLiveData<SharedTransitionState>()
     private val trackLoadingState = MutableLiveData<LoadingState>()
@@ -67,23 +59,23 @@ class AlbumDetailsViewModel(
     }
 
     private fun fetchAlbumTracks(id: Long) {
-        viewModelScope.launch(Dispatchers.Main) {
-            trackLoadingState.value = LoadingState.IS_LOADING
-            val result = withContext(Dispatchers.IO) {
-                useCase.invoke(id)
-            }
-            trackLoadingState.value = LoadingState.IS_LOADED
+        viewModelScope.launch(Dispatchers.IO) {
+            trackLoadingState.postValue(LoadingState.IS_LOADING)
+            val result = useCase.invoke(id)
+            trackLoadingState.postValue(LoadingState.IS_LOADED)
             when (result) {
                 is Outcome.Success -> {
-                    tracksData.value = LiveDataState.Success(result.data.toTrackData())
+                    tracksData.postValue(LiveDataState.Success(result.data.toTrackData()))
                 }
                 is Outcome.Error -> {
-                    tracksData.value = LiveDataState.Error(
-                        ErrorData(
-                            ErrorDataType.RECOVERABLE,
-                            StringPresenter(R.string.error_fetch_data_title),
-                            StringPresenter(R.string.error_fetch_data_description),
-                            StringPresenter(R.string.retry)
+                    tracksData.postValue(
+                        LiveDataState.Error(
+                            ErrorData(
+                                ErrorDataType.RECOVERABLE,
+                                StringPresenter(R.string.error_fetch_data_title),
+                                StringPresenter(R.string.error_fetch_data_description),
+                                StringPresenter(R.string.retry)
+                            )
                         )
                     )
                 }
