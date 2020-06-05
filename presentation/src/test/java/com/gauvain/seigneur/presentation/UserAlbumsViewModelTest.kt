@@ -4,6 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
+import com.gauvain.seigneur.presentation.mock.LiveDataMock
+import com.gauvain.seigneur.presentation.mock.UseCaseModelMock
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.userAlbums.UserAlbumsViewModel
 import com.gauvain.seigneur.presentation.utils.MainCoroutineRule
@@ -51,15 +53,33 @@ class UserAlbumsViewModelTest {
     }
 
     @Test
+    fun `albumList must return emptyList when observed`() {
+        viewModel = UserAlbumsViewModel(useCase)
+        val listValue = viewModel.albumList.getOrAwaitValue()
+        assertEquals(listValue, listOf<AlbumItemData>())
+    }
+
+    @Test
+    fun `given initialStatevalue when pagedList is observed then initialState must return IS_LOADING`() {
+        viewModel = UserAlbumsViewModel(useCase)
+        viewModel.albumList.getOrAwaitValue()
+        val initialStatevalue = viewModel.initialLoadingState?.getOrAwaitValue()
+        assertEquals(
+            initialStatevalue, LiveDataState.Success(
+                LoadingState.IS_LOADING)
+        )
+    }
+
+    @Test
     fun `given usecase return error when pagedList is observed then initialState must return error`() {
         mainCoroutineRule.runBlockingTest {
             viewModel = UserAlbumsViewModel(useCase)
             given(useCase.invoke("2529", 0)).willReturn(Outcome.Error(ErrorType.ERROR_BODY))
-            viewModel.albumList.getOrAwaitValue()
-            mainCoroutineRule.advanceUntilIdle()
-            val value = viewModel.initialLoadingState?.getOrAwaitValue()
+            val listValue = viewModel.albumList.getOrAwaitValue()
+            val initialStatevalue = viewModel.initialLoadingState?.getOrAwaitValue()
+            assertEquals(listValue, listOf<AlbumItemData>())
             assertEquals(
-                value, LiveDataState.Error(
+                initialStatevalue, LiveDataState.Error(
                     ErrorData(
                         ErrorDataType.RECOVERABLE,
                         StringPresenter(R.string.error_fetch_data_title),
@@ -70,4 +90,28 @@ class UserAlbumsViewModelTest {
             )
         }
     }
+
+    @Test
+    fun `given usecase return list when pagedList is observed then must return data`() {
+        mainCoroutineRule.runBlockingTest {
+            viewModel = UserAlbumsViewModel(useCase)
+            given(
+                useCase.invoke(
+                    "2529",
+                    0
+                )
+            ).willReturn(UseCaseModelMock.createSuccessAlbumOutCome())
+            val listValue = viewModel.albumList.getOrAwaitValue()
+            val initialStatevalue = viewModel.initialLoadingState?.getOrAwaitValue()
+            assertEquals(listValue, LiveDataMock.createAlbumPaginedList())
+            assertEquals(
+                initialStatevalue,
+                LiveDataState.Success(LoadingState.IS_LOADED)
+            )
+        }
+    }
+    
+    /**
+     * Perform test on loadAfter method requires instrumented tests
+     */
 }
