@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.presentation
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.useCase.GetAlbumTracksUseCase
@@ -9,44 +8,24 @@ import com.gauvain.seigneur.presentation.mock.UseCaseModelMock
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.utils.*
 import com.nhaarman.mockitokotlin2.given
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.*
 
 @ExperimentalCoroutinesApi
-class AlbumDetailsViewModelTest {
+class AlbumDetailsViewModelTest : BaseViewModelTest() {
+
     // Run tasks synchronously
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
-    private val testingDispatcher = Dispatchers.Unconfined
     @Mock
     private lateinit var useCase: GetAlbumTracksUseCase
     private lateinit var viewModel: AlbumDetailsViewModel
 
-    @Before
-    fun setup() {
+    override fun setup() {
         MockitoAnnotations.initMocks(this)
-        Dispatchers.setMain(testingDispatcher)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
-    }
-
-    @ExperimentalCoroutinesApi
-    private fun unconfinifyTestScope() {
-        ui = Dispatchers.Unconfined
-        io = Dispatchers.Unconfined
-        background = Dispatchers.Unconfined
+        super.setup()
     }
 
     @Test
@@ -92,16 +71,6 @@ class AlbumDetailsViewModelTest {
                     R.drawable.ic_tracks_not_available
                 )
             )
-        )
-    }
-
-    @Test
-    fun `Given getLoadingState() when fetch album then its value must change to IS_LOADING`() {
-        viewModel = AlbumDetailsViewModel(albumDetailsData, useCase)
-        viewModel.fetchAlbumTracks()
-        val loadingValue = viewModel.getLoadingState().getOrAwaitValue()
-        assertEquals(
-            loadingValue, LoadingState.IS_LOADING
         )
     }
 
