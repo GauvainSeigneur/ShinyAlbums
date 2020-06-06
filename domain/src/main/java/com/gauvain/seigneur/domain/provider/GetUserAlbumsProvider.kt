@@ -6,7 +6,7 @@ import java.lang.Exception
 
 interface GetUserAlbumsProvider {
     @Throws(GetUserAlbumsException::class)
-    fun getUserAlbums(userId: String, page: Int): AlbumPaginedModel
+    suspend fun getUserAlbums(userId: String, page: Int): AlbumPaginedModel
 }
 
 class GetUserAlbumsException(

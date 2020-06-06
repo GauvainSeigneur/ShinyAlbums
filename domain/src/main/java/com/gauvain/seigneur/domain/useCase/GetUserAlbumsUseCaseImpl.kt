@@ -7,7 +7,7 @@ import com.gauvain.seigneur.domain.provider.GetUserAlbumsProvider
 internal class GetUserAlbumsUseCaseImpl(private val provider: GetUserAlbumsProvider) :
     GetUserAlbumsUseCase {
 
-    override fun invoke(userId: String, page: Int): Outcome<AlbumPaginedModel, ErrorType> {
+    override suspend fun invoke(userId: String, page: Int): Outcome<AlbumPaginedModel, ErrorType> {
         return try {
             val result = provider.getUserAlbums(userId, page)
             Outcome.Success(result)

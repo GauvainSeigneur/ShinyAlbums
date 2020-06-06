@@ -6,7 +6,7 @@ import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.GetUserAlbumsProvider
 
 interface GetUserAlbumsUseCase {
-    fun invoke(userId: String, page: Int): Outcome<AlbumPaginedModel, ErrorType>
+    suspend fun invoke(userId: String, page: Int): Outcome<AlbumPaginedModel, ErrorType>
 
     companion object {
         fun create(provider: GetUserAlbumsProvider): GetUserAlbumsUseCase =

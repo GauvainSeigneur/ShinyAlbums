@@ -11,6 +11,7 @@ import com.gauvain.seigneur.presentation.model.ErrorDataType
 import com.gauvain.seigneur.presentation.model.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.utils.StringPresenter
+import kotlinx.coroutines.runBlocking
 
 class UserAlbumsDataSource(
     private val userName: String,
@@ -22,7 +23,7 @@ class UserAlbumsDataSource(
     val initialLoadingState = MutableLiveData<LiveDataState<LoadingState>>()
     val nextLoadingState = MutableLiveData<LiveDataState<LoadingState>>()
 
-    fun retryAllFailed() {
+    suspend fun retryAllFailed() {
         val prevRetry = retry
         retry = null
         prevRetry?.invoke()
@@ -33,7 +34,9 @@ class UserAlbumsDataSource(
         callback: LoadInitialCallback<Int, AlbumModel>
     ) {
         initialLoadingState.postValue(LiveDataState.Success(LoadingState.IS_LOADING))
-        val result = useCase.invoke(userName, 0)
+        val result = runBlocking {
+            useCase.invoke(userName, 0)
+        }
         when (result) {
             is Outcome.Success -> {
                 // clear retry since last request succeeded
@@ -63,8 +66,9 @@ class UserAlbumsDataSource(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, AlbumModel>) {
         if (!isLastPage) {
             nextLoadingState.postValue(LiveDataState.Success(LoadingState.IS_LOADING))
-            val result =
+            val result = runBlocking {
                 useCase.invoke(userName, params.key)
+            }
             nextLoadingState.postValue(LiveDataState.Success(LoadingState.IS_LOADED))
             when (result) {
                 is Outcome.Success -> {

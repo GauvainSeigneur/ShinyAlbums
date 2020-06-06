@@ -12,7 +12,7 @@ import retrofit2.Response
 class GetUserAlbumsAdapter(private val service: DeezerService) :
     GetUserAlbumsProvider {
 
-    override fun getUserAlbums(userId: String, page: Int): AlbumPaginedModel {
+    override suspend fun getUserAlbums(userId: String, page: Int): AlbumPaginedModel {
         val result = runCatching {
             service.getUserAlbums(userId, page).execute()
         }.onFailure {

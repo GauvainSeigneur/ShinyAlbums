@@ -7,6 +7,7 @@ import androidx.paging.PagedList
 import com.gauvain.seigneur.domain.useCase.GetUserAlbumsUseCase
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.utils.event.Event
+import com.gauvain.seigneur.presentation.utils.ioJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -43,7 +44,7 @@ class UserAlbumsViewModel(
 
     fun retry() {
         //as dataSource is in background, viewModel must call this method from background too
-        viewModelScope.launch(Dispatchers.IO) {
+        ioJob {
             dataSourceFactory.albumsDataSourceLiveData.value?.retryAllFailed()
         }
     }

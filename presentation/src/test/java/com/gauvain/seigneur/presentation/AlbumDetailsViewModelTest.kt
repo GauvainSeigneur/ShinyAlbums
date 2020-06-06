@@ -7,14 +7,10 @@ import com.gauvain.seigneur.domain.useCase.GetAlbumTracksUseCase
 import com.gauvain.seigneur.presentation.albumDetails.AlbumDetailsViewModel
 import com.gauvain.seigneur.presentation.mock.UseCaseModelMock
 import com.gauvain.seigneur.presentation.model.*
-import com.gauvain.seigneur.presentation.utils.MainCoroutineRule
-import com.gauvain.seigneur.presentation.utils.QuantityStringPresenter
-import com.gauvain.seigneur.presentation.utils.StringPresenter
-import com.gauvain.seigneur.presentation.utils.getOrAwaitValue
+import com.gauvain.seigneur.presentation.utils.*
 import com.nhaarman.mockitokotlin2.given
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
@@ -27,15 +23,10 @@ import org.mockito.*
 
 @ExperimentalCoroutinesApi
 class AlbumDetailsViewModelTest {
-
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     // Run tasks synchronously
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
-    // Sets the main coroutines dispatcher to a TestCoroutineScope for unit testing.
-    @ExperimentalCoroutinesApi
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    private val testingDispatcher = Dispatchers.Unconfined
     @Mock
     private lateinit var useCase: GetAlbumTracksUseCase
     private lateinit var viewModel: AlbumDetailsViewModel
@@ -43,13 +34,19 @@ class AlbumDetailsViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testingDispatcher)
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
-        mainThreadSurrogate.close()
+    }
+
+    @ExperimentalCoroutinesApi
+    private fun unconfinifyTestScope() {
+        ui = Dispatchers.Unconfined
+        io = Dispatchers.Unconfined
+        background = Dispatchers.Unconfined
     }
 
     @Test
@@ -85,7 +82,6 @@ class AlbumDetailsViewModelTest {
         viewModel = AlbumDetailsViewModel(albumDetailsData.copy(available = false), useCase)
         viewModel.fetchAlbumTracks()
         val value = viewModel.getTracksData().getOrAwaitValue()
-        mainCoroutineRule.advanceUntilIdle()
         assertEquals(
             value, LiveDataState.Error(
                 ErrorData(
@@ -100,15 +96,23 @@ class AlbumDetailsViewModelTest {
     }
 
     @Test
+    fun `Given getLoadingState() when fetch album then its value must change to IS_LOADING`() {
+        viewModel = AlbumDetailsViewModel(albumDetailsData, useCase)
+        viewModel.fetchAlbumTracks()
+        val loadingValue = viewModel.getLoadingState().getOrAwaitValue()
+        assertEquals(
+            loadingValue, LoadingState.IS_LOADING
+        )
+    }
+
+    @Test
     fun `Given an exception is raised when fetchAlbumTracks then it must return error`() {
-        mainCoroutineRule.runBlockingTest {
+        runBlockingTest {
             given(useCase.invoke(0L)).willReturn(Outcome.Error(ErrorType.ERROR_UNKNOWN))
             viewModel = AlbumDetailsViewModel(albumDetailsData, useCase)
+            unconfinifyTestScope()
             viewModel.fetchAlbumTracks()
             val loadingValue = viewModel.getLoadingState().getOrAwaitValue()
-            assertEquals(
-                loadingValue, LoadingState.IS_LOADING
-            )
             val value = viewModel.getTracksData().getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Error(
@@ -120,23 +124,20 @@ class AlbumDetailsViewModelTest {
                     )
                 )
             )
-            val nextLoadingValue = viewModel.getLoadingState().getOrAwaitValue()
             assertEquals(
-                nextLoadingValue, LoadingState.IS_LOADED
+                loadingValue, LoadingState.IS_LOADED
             )
         }
     }
 
     @Test
     fun `Given usecase return model when fetchAlbumTracks then it must return data`() {
-        mainCoroutineRule.runBlockingTest {
+        runBlockingTest {
             given(useCase.invoke(albumDetailsData.albumTrackListId)).willReturn(UseCaseModelMock.createSuccessTracksOutCome())
             viewModel = AlbumDetailsViewModel(albumDetailsData, useCase)
+            unconfinifyTestScope()
             viewModel.fetchAlbumTracks()
             val loadingValue = viewModel.getLoadingState().getOrAwaitValue()
-            assertEquals(
-                loadingValue, LoadingState.IS_LOADING
-            )
             val value = viewModel.getTracksData().getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Success(
@@ -146,9 +147,8 @@ class AlbumDetailsViewModelTest {
                     )
                 )
             )
-            val nextLoadingValue = viewModel.getLoadingState().getOrAwaitValue()
             assertEquals(
-                nextLoadingValue, LoadingState.IS_LOADED
+                loadingValue, LoadingState.IS_LOADED
             )
         }
     }

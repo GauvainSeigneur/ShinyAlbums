@@ -6,8 +6,7 @@ import com.gauvain.seigneur.domain.useCase.GetAlbumTracksUseCase
 import com.gauvain.seigneur.presentation.R
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.utils.StringPresenter
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import com.gauvain.seigneur.presentation.utils.ioJob
 
 typealias SummaryState = LiveDataState<AlbumDetailsSummary>
 typealias TracksState = LiveDataState<TrackData>
@@ -59,7 +58,7 @@ class AlbumDetailsViewModel(
     }
 
     private fun fetchAlbumTracks(id: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
+        ioJob {
             trackLoadingState.postValue(LoadingState.IS_LOADING)
             val result = useCase.invoke(id)
             trackLoadingState.postValue(LoadingState.IS_LOADED)
